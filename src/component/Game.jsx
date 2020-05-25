@@ -4,8 +4,8 @@ import Block from "./Block";
 const Game = ({ grid }) => {
   return (
     <div className="grid">
-      {grid.map((block) => (
-        <Block>{block}</Block>
+      {grid.map((num, i) => (
+        <Block key={i} num={num === '0' ? '' : num}/>
       ))}
     </div>
   );

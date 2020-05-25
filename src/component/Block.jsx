@@ -1,7 +1,7 @@
 import React from "react";
 
-const Block = () => {
-  return <input type="textbox" className="block" />
+const Block = ({num, userInput}) => {
+  return <input type="textbox" className={`block`} value={num} onChange={userInput}/>
 };
 
 export default Block;
