@@ -72,19 +72,29 @@ $accent: rgb(255, 196, 0);
   }
 }
 
-.block {
+.block,
+.original {
   width: 75px;
   height: 75px;
-  border: 2px solid ¢gray;
+  border: 2px solid $gray;
   text-align: center;
   font-size: 2rem;
   font-weight: 600;
   outline: none;
+  background-color: white;
+  cursor: pointer;
 
   &:focus {
     border: 5px solid $accent;
-    background-color: $primary;
   }
+}
+
+.original {
+  background-color: $primary;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid $gray;
 }
 
 .menu {
@@ -101,27 +111,25 @@ $accent: rgb(255, 196, 0);
   font-size: 1.5rem;
   padding: 0.75em 1.5em;
   margin: 1em 0;
-  cursor: pointer;
   font-weight: 600;
   outline: none;
   width: 180px;
   border-radius: 10px;
   border: 2px solid $gray;
   transition: 250ms ease;
-
-  &:hover,
-  &:focus {
-    color: $dark-gray;
-    letter-spacing: 0.15em;
-  }
-
-  &:active {
-    color: white;
-  }
+  color: black;
 }
 
 .active {
   background-color: $accent;
+  cursor: pointer;
+
+  &:hover,
+  &:focus {
+    color: white;
+    letter-spacing: 0.15em;
+  }
+
 }
 
 p {

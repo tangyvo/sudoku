@@ -1,7 +1,23 @@
 import React from "react";
 
-const Block = ({num, userInput}) => {
-  return <input type="textbox" className={`block`} value={num} onChange={userInput}/>
+const Block = ({ userInput, num, original, index, gameStart }) => {
+  return (
+    <>
+      {original !== "0" ? (
+        <div className="original">{original}</div>
+      ) : original === "0" && gameStart ? (
+        <div className="block"></div>
+      ) : (
+        <input
+        maxLength='1'
+          type="textbox"
+          className="block"
+          value={num === '0' ? '' : num}
+          onChange={(e) => userInput(e, index)}
+        />
+      )}
+    </>
+  );
 };
 
 export default Block;
