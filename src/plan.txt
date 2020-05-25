@@ -1,0 +1,10 @@
+<!--
+1. Basic layout
+2. Make API call to retrieve sudoku grid based on difficulty level choosen
+3. start timer
+4. validate input
+5. validate grid is correct when Submit CTA 
+6. Refactor
+7. Additional feaatures: undo, save best score, allow notes in sudoku
+
+-->

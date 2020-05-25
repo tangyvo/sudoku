@@ -1,0 +1,152 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: 0.2em;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+$dark-gray: rgb(34, 34, 34);
+$gray: rgb(230, 230, 230);
+$primary: rgb(255, 242, 168);
+$accent: rgb(255, 196, 0);
+
+.title {
+  text-align: center;
+  padding-bottom: 1em;
+  font-size: 4rem;
+}
+
+.app {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: $primary;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  grid-template-rows: repeat(9, 1fr);
+  border: 10px solid $dark-gray;
+  border-radius: 15px;
+
+  :nth-child(9n-6),
+  :nth-child(9n-3) {
+    border-right: 5px solid $dark-gray;
+  }
+
+  :nth-child(19),
+  :nth-child(20),
+  :nth-child(21),
+  :nth-child(22),
+  :nth-child(23),
+  :nth-child(24),
+  :nth-child(25),
+  :nth-child(26),
+  :nth-child(27),
+  :nth-child(46),
+  :nth-child(47),
+  :nth-child(48),
+  :nth-child(49),
+  :nth-child(50),
+  :nth-child(51),
+  :nth-child(52),
+  :nth-child(53),
+  :nth-child(54) {
+    border-bottom: 5px solid black;
+  }
+}
+
+.block {
+  width: 75px;
+  height: 75px;
+  border: 2px solid ¢gray;
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 600;
+  outline: none;
+
+  &:focus {
+    border: 5px solid $accent;
+    background-color: $primary;
+  }
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 300px;
+  min-height: calc(75px * 9);
+}
+
+.btn {
+  font-family: inherit;
+  font-size: 1.5rem;
+  padding: 0.75em 1.5em;
+  margin: 1em 0;
+  cursor: pointer;
+  font-weight: 600;
+  outline: none;
+  width: 180px;
+  border-radius: 10px;
+  border: 2px solid $gray;
+  transition: 250ms ease;
+
+  &:hover,
+  &:focus {
+    color: $dark-gray;
+    letter-spacing: 0.15em;
+  }
+
+  &:active {
+    color: white;
+  }
+}
+
+.active {
+  background-color: $accent;
+}
+
+p {
+  font-size: 1.2rem;
+}
+
+select {
+  margin: 0.2em 0 1em 0;
+  font-size: 1.5rem;
+  width: 180px;
+  text-align: center;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  padding: 0.5em;
+}
+
+option {
+  font-family: inherit;
+
+  text-align: center;
+}
+
+.timer {
+  font-size: 2.5rem;
+  text-align: center;
+  margin-bottom: 1em;
+}
