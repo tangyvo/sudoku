@@ -3,6 +3,7 @@ import React from "react";
 const Block = ({ userInput, num, original, index, gameStart }) => {
   return (
     <>
+    {/* <div className="block">{index}</div> */}
       {original !== "0" ? (
         <div className="original">{original}</div>
       ) : original === "0" && gameStart ? (

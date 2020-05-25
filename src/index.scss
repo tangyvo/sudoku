@@ -20,9 +20,10 @@ code {
 }
 
 $dark-gray: rgb(34, 34, 34);
-$gray: rgb(230, 230, 230);
+$gray: rgb(210, 210, 210);
+$light-gray: rgb(238, 238, 238);
 $primary: rgb(255, 242, 168);
-$accent: rgb(255, 196, 0);
+$accent: rgb(255, 174, 0);
 
 .title {
   text-align: center;
@@ -36,6 +37,7 @@ $accent: rgb(255, 196, 0);
   align-items: center;
   min-height: 100vh;
   background-color: $primary;
+  position: relative;
 }
 
 .grid {
@@ -83,6 +85,7 @@ $accent: rgb(255, 196, 0);
   outline: none;
   background-color: white;
   cursor: pointer;
+  color: $accent;
 
   &:focus {
     border: 5px solid $accent;
@@ -90,11 +93,16 @@ $accent: rgb(255, 196, 0);
 }
 
 .original {
-  background-color: $primary;
+  background-color: $light-gray;
   display: flex;
   justify-content: center;
   align-items: center;
   border: 2px solid $gray;
+  color: $dark-gray;
+}
+
+.highlight {
+  border: 5px solid red;
 }
 
 .menu {
@@ -129,7 +137,6 @@ $accent: rgb(255, 196, 0);
     color: white;
     letter-spacing: 0.15em;
   }
-
 }
 
 p {
@@ -157,4 +164,41 @@ option {
   font-size: 2.5rem;
   text-align: center;
   margin-bottom: 1em;
+}
+
+.error {
+  padding: .75em 0;
+  text-align: center;
+  font-size: 1.5rem;
+  height: 100px;
+  width: 180px;
+  opacity: 0;
+  border: 3px dashed $accent;
+}
+
+.won {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 3em;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  border-radius: 10px;
+  text-align: center;
+
+  p {
+    font-size: 3rem;
+    font-weight: 600;
+  }
+}
+
+.btn-newgame {
+  cursor: pointer;
+}
+
+.show {
+  opacity: 1;
+  display: block;
 }
