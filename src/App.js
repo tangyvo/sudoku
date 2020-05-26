@@ -6,12 +6,14 @@ import { Winners } from "./component/WinningCombination";
 
 const App = () => {
   const [originalGrid, setOrginalGrid] = useState(Array(81).fill("0"));
+  const [gridHistory, setGridHistory] = useState([]);
   const [grid, setGrid] = useState(Array(81).fill(""));
   const [difficulty, setDifficulty] = useState("easy");
   const [gameStart, setGameStart] = useState(false);
   const [timer, setTimer] = useState("00:00");
   const [fullGrid, setFullGrid] = useState(false);
   const [error, setError] = useState(false);
+  const [focus, setFocus] = useState(null);
 
   const [won, setWon] = useState(false);
 
@@ -23,14 +25,17 @@ const App = () => {
     fetch(api)
       .then((response) => response.json())
       .then((data) => {
-        setGrid(data.board.join(",").split(","));
-        setOrginalGrid(data.board.join(",").split(","));
+        let grid = data.board.join(",").split(",");
+        setGrid(grid);
+        setOrginalGrid(grid);
+        setGridHistory([grid]);
         setGameStart(true);
       });
   };
 
   useEffect(() => {
-    let emptyBlock = grid.filter((block) => block === "0" || block === '').length;
+    let emptyBlock = grid.filter((block) => block === "0" || block === "")
+      .length;
     if (emptyBlock === 0 && gameStart) {
       setFullGrid(true);
     } else {
@@ -47,7 +52,7 @@ const App = () => {
       }
       combination = combination.sort().join("");
       if (combination !== "123456789") {
-        console.log(combination, "no match", 'ARRAY: ', arr);
+        console.log(combination, "no match", "ARRAY: ", arr);
         noMatch = true;
         setError(true);
       }
@@ -102,25 +107,76 @@ const App = () => {
     if (input >= 1 || input <= 9) {
       let gridCopy = [...grid];
       gridCopy[index] = e.target.value;
-      // gridCopy.map(block => block === '' ? block = '0' : block);
       setGrid(gridCopy);
+      let gridHistoryCopy = gridHistory;
+      gridHistoryCopy.push(gridCopy);
+      setGridHistory(gridHistoryCopy);
+      console.log(gridHistory);
     }
 
     return e.target.value;
   };
 
+  const moveFocus = (e) => {
+    let focusCopy = focus;
+    if (e.keyCode === 39) {
+      focusCopy += 1;
+    } else if (e.keyCode === 40) {
+      focusCopy += 9;
+    } else if (e.keyCode === 37) {
+      focusCopy -= 1;
+    } else if (e.keyCode === 38) {
+      focusCopy -= 9;
+    }
+
+    if (focusCopy > 80 || focusCopy < 0) return;
+    setFocus(focusCopy);
+
+    if (document.getElementById(focusCopy)) {
+      document.getElementById(focusCopy).focus();
+    }
+  };
+
+  const handleFocus = (index) => {
+    setFocus(index);
+  };
+
+  useEffect(() => {
+    window.addEventListener("keydown", moveFocus);
+    return () => {
+      window.removeEventListener("keydown", moveFocus);
+    };
+  });
+
+  const handleUndo = () => {
+    let lastStep = gridHistory.length - 2;
+    if (lastStep < 0) return;
+
+    setGrid(gridHistory[lastStep]);
+    let updateGridHistory = gridHistory.splice(0, gridHistory.length-1);
+    setGridHistory(updateGridHistory);
+  };
+
   return (
     <>
       <div className="app">
-        <Game grid={grid} originalGrid={originalGrid} userInput={userInput} />
+        <Game
+          grid={grid}
+          originalGrid={originalGrid}
+          userInput={userInput}
+          focus={focus}
+          handleFocus={handleFocus}
+          gameStart={gameStart}
+        />
         <Menu
           newGame={newGame}
           handleDifficulty={handleDifficulty}
           timer={timer}
-          gameStart={gameStart}
           fullGrid={fullGrid}
           handleSubmit={handleSumbit}
           error={error}
+          undo={handleUndo}
+          gameStart={gameStart}
         />
       </div>
       <Won won={won} newGame={newGame} />

@@ -101,9 +101,10 @@ $accent: rgb(255, 174, 0);
   color: $dark-gray;
 }
 
-.highlight {
-  border: 5px solid red;
+.focus {
+  border: 5px solid $accent;
 }
+
 
 .menu {
   display: flex;
@@ -167,7 +168,7 @@ option {
 }
 
 .error {
-  padding: .75em 0;
+  padding: 0.75em 0;
   text-align: center;
   font-size: 1.5rem;
   height: 100px;

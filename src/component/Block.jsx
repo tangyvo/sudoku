@@ -1,21 +1,32 @@
 import React from "react";
 
-const Block = ({ userInput, num, original, index, gameStart }) => {
+const Block = ({
+  userInput,
+  num,
+  original,
+  index,
+  gameStart,
+  focus,
+  handleFocus,
+}) => {
   return (
     <>
-    {/* <div className="block">{index}</div> */}
+      {/* <div className="block">{index}</div> */}
       {original !== "0" ? (
-        <div className="original">{original}</div>
-      ) : original === "0" && gameStart ? (
+        <div className={index === focus ? "original focus" : "original"}>
+          {original}
+        </div>
+      ) : !gameStart ? (
         <div className="block"></div>
       ) : (
         <input
-        maxLength='1'
-        onFocus='true'
+          id={index}
+          maxLength="1"
           type="textbox"
-          className="block"
-          value={num === '0' ? '' : num}
+          className={index === focus ? "block focus" : "block"}
+          value={num === "0" ? "" : num}
           onChange={(e) => userInput(e, index)}
+          onClick={() => handleFocus(index)}
         />
       )}
     </>

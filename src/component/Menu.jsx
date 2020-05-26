@@ -1,6 +1,6 @@
 import React from "react";
 
-const Menu = ({ newGame, handleSubmit, handleDifficulty, timer, fullGrid, error}) => {
+const Menu = ({ newGame, handleSubmit, handleDifficulty, timer, fullGrid, error, undo, gameStart}) => {
 
   return (
     <nav className="menu">
@@ -19,6 +19,10 @@ const Menu = ({ newGame, handleSubmit, handleDifficulty, timer, fullGrid, error}
       >
         New Game
       </button>
+
+      <button className={gameStart ? 'btn btn-undo active' : 'btn btn-undo'}
+      onClick={undo}>Undo</button>
+      
       <button
         className={fullGrid ? "btn btn-submit active" : " btn btn-submit"}
         disabled={fullGrid ? false : true}
@@ -26,6 +30,7 @@ const Menu = ({ newGame, handleSubmit, handleDifficulty, timer, fullGrid, error}
       >
         Submit
       </button>
+
       <p className={error ? 'error show' : 'error'}>Oops! Try again ...</p>
     </nav>
   );

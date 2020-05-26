@@ -1,7 +1,7 @@
 import React from "react";
 import Block from "./Block";
 
-const Game = ({ grid, originalGrid, userInput, gameStart }) => {
+const Game = ({ grid, originalGrid, userInput, gameStart, focus, handleFocus }) => {
   return (
     <div className="grid">
       {/* {console.log(grid)} */}
@@ -13,6 +13,9 @@ const Game = ({ grid, originalGrid, userInput, gameStart }) => {
           index={i}
           userInput={userInput}
           gameStart={gameStart}
+          focus={focus}
+          handleFocus={handleFocus}
+
         />
       ))}
     </div>
