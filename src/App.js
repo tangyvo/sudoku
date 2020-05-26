@@ -16,6 +16,7 @@ const App = () => {
   const [won, setWon] = useState(false);
 
   const newGame = () => {
+    setGameStart(false);
     setWon(false);
 
     const api = `https://sugoku.herokuapp.com/board?difficulty=${difficulty}`;
@@ -46,7 +47,7 @@ const App = () => {
       }
       combination = combination.sort().join("");
       if (combination !== "123456789") {
-        console.log(combination, "no match");
+        console.log(combination, "no match", 'ARRAY: ', arr);
         noMatch = true;
         setError(true);
       }

@@ -1,6 +1,6 @@
 import React from "react";
 
-const Menu = ({ newGame, handleSubmit, handleDifficulty, timer, gameStart, fullGrid, error}) => {
+const Menu = ({ newGame, handleSubmit, handleDifficulty, timer, fullGrid, error}) => {
 
   return (
     <nav className="menu">
@@ -14,15 +14,14 @@ const Menu = ({ newGame, handleSubmit, handleDifficulty, timer, gameStart, fullG
         <option value="hard">Hard</option>
       </select>
       <button
-        className={gameStart ? "btn btn-start" : "active btn btn-start"}
+        className="btn btn-start active"
         onClick={newGame}
-        disabled={gameStart ? true : false}
       >
-        Start
+        New Game
       </button>
       <button
         className={fullGrid ? "btn btn-submit active" : " btn btn-submit"}
-        // disabled={fullGrid ? false : true}
+        disabled={fullGrid ? false : true}
         onClick={handleSubmit}
       >
         Submit

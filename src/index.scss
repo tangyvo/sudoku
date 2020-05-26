@@ -121,7 +121,7 @@ $accent: rgb(255, 174, 0);
   margin: 1em 0;
   font-weight: 600;
   outline: none;
-  width: 180px;
+  width: 220px;
   border-radius: 10px;
   border: 2px solid $gray;
   transition: 250ms ease;
@@ -135,7 +135,7 @@ $accent: rgb(255, 174, 0);
   &:hover,
   &:focus {
     color: white;
-    letter-spacing: 0.15em;
+    letter-spacing: 0.1em;
   }
 }
 

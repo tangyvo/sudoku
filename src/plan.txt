@@ -1,10 +1,12 @@
 <!--
 1. Basic layout
 2. Make API call to retrieve sudoku grid based on difficulty level choosen
-3. start timer
-4. validate input
-5. validate grid is correct when Submit CTA 
-6. Refactor
-7. Additional feaatures: undo, save best score, allow notes in sudoku
+3. validate input
+4. start and end timer
+5. enabele submit if all blocks have been filed in
+6. check if user has won
+7. ADVANCE: move focus state using arrow keys
+8. ADVANCE: undo move
+9. ADVANCE: pause timer
 
 -->

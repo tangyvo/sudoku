@@ -11,6 +11,7 @@ const Block = ({ userInput, num, original, index, gameStart }) => {
       ) : (
         <input
         maxLength='1'
+        onFocus='true'
           type="textbox"
           className="block"
           value={num === '0' ? '' : num}
