@@ -87,9 +87,9 @@ $accent: rgb(255, 174, 0);
   cursor: pointer;
   color: $accent;
 
-  &:focus {
-    border: 5px solid $accent;
-  }
+  // &:focus {
+  //   border: 5px solid $accent;
+  // }
 }
 
 .original {

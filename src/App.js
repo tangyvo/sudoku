@@ -104,8 +104,8 @@ const App = () => {
 
   const userInput = (e, index) => {
     const input = Number(e.target.value);
+    let gridCopy = [...grid];
     if (input >= 1 || input <= 9) {
-      let gridCopy = [...grid];
       gridCopy[index] = e.target.value;
       setGrid(gridCopy);
       let gridHistoryCopy = gridHistory;
