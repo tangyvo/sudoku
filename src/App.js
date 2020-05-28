@@ -14,7 +14,8 @@ const App = () => {
   const [fullGrid, setFullGrid] = useState(false);
   const [error, setError] = useState(false);
   const [focus, setFocus] = useState(null);
-
+  const [note, setNote] = useState(false);
+  const [noteArr, setNoteArr] = useState(Array(81).fill([]));
   const [won, setWon] = useState(false);
 
   const newGame = () => {
@@ -32,6 +33,11 @@ const App = () => {
         setGameStart(true);
       });
   };
+
+  useEffect(() => {
+    let noteArrCopy = noteArr.map((arr, i) => [i, []])
+    setNoteArr(noteArrCopy);
+  }, [])
 
   useEffect(() => {
     let emptyBlock = grid.filter((block) => block === "0" || block === "")
@@ -52,14 +58,12 @@ const App = () => {
       }
       combination = combination.sort().join("");
       if (combination !== "123456789") {
-        console.log(combination, "no match", "ARRAY: ", arr);
         noMatch = true;
         setError(true);
       }
     }
 
     if (!noMatch) {
-      console.log(`you've won`);
       setError(false);
       setWon(true);
       let endTime = timer;
@@ -111,11 +115,16 @@ const App = () => {
       let gridHistoryCopy = gridHistory;
       gridHistoryCopy.push(gridCopy);
       setGridHistory(gridHistoryCopy);
-      console.log(gridHistory);
     }
 
     return e.target.value;
   };
+
+  const prevFocusRef  = useRef();
+
+  useEffect(() => {
+    prevFocusRef.current = focus;
+  })
 
   const moveFocus = (e) => {
     let focusCopy = focus;
@@ -129,12 +138,16 @@ const App = () => {
       focusCopy -= 9;
     }
 
-    if (focusCopy > 80 || focusCopy < 0) return;
-    setFocus(focusCopy);
+    // if (focusCopy > 80 || focusCopy < 0) return;
+    // setFocus(focusCopy);
 
-    if (document.getElementById(focusCopy)) {
-      document.getElementById(focusCopy).focus();
-    }
+    // let focusElem = document.getElementById(focusCopy);
+
+    // if (focusElem.classList.contains("block")) {
+    //   focusElem.focus();
+    // } else {
+    //   document.getElementById(prevFocusRef.current).blur();
+    // }
   };
 
   const handleFocus = (index) => {
@@ -151,11 +164,34 @@ const App = () => {
   const handleUndo = () => {
     let lastStep = gridHistory.length - 2;
     if (lastStep < 0) return;
-
     setGrid(gridHistory[lastStep]);
-    let updateGridHistory = gridHistory.splice(0, gridHistory.length-1);
+    let updateGridHistory = gridHistory.splice(0, gridHistory.length - 1);
     setGridHistory(updateGridHistory);
   };
+
+  const noteMode = () => {
+    setNote(!note);
+  }
+
+
+  useEffect(() => {
+    window.addEventListener("keydown", e => {
+      if (e.keyCode < 49 || e.keyCode > 57) return
+
+      const noteArrayCopy = noteArr;
+
+      const nums = noteArrayCopy[focus][1];
+
+      if (nums.includes(e.keyCode)) {
+        nums.join('').replace(e.keyCode, '').split('');
+      } else {
+        nums.push(e.keyCode);
+      }
+
+      console.log(nums)
+    });
+
+  }, [noteMode])
 
   return (
     <>
@@ -177,6 +213,8 @@ const App = () => {
           error={error}
           undo={handleUndo}
           gameStart={gameStart}
+          noteMode={noteMode}
+          note={note}
         />
       </div>
       <Won won={won} newGame={newGame} />

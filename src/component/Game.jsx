@@ -15,7 +15,6 @@ const Game = ({ grid, originalGrid, userInput, gameStart, focus, handleFocus }) 
           gameStart={gameStart}
           focus={focus}
           handleFocus={handleFocus}
-
         />
       ))}
     </div>

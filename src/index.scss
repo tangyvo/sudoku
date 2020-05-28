@@ -2,6 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  // border: 1px solid red;
 }
 
 body {
@@ -27,8 +28,9 @@ $accent: rgb(255, 174, 0);
 
 .title {
   text-align: center;
-  padding-bottom: 1em;
-  font-size: 4rem;
+  padding: 1em 0;
+  font-size: 3rem;
+  margin-top: 4rem;
 }
 
 .app {
@@ -44,8 +46,8 @@ $accent: rgb(255, 174, 0);
   display: grid;
   grid-template-columns: repeat(9, 1fr);
   grid-template-rows: repeat(9, 1fr);
-  border: 10px solid $dark-gray;
-  border-radius: 15px;
+  border: 5px solid $dark-gray;
+  border-radius: 5px;
 
   :nth-child(9n-6),
   :nth-child(9n-3) {
@@ -76,11 +78,11 @@ $accent: rgb(255, 174, 0);
 
 .block,
 .original {
-  width: 75px;
-  height: 75px;
+  width: 50px;
+  height: 50px;
   border: 2px solid $gray;
   text-align: center;
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: 600;
   outline: none;
   background-color: white;
@@ -102,27 +104,26 @@ $accent: rgb(255, 174, 0);
 }
 
 .focus {
-  border: 5px solid $accent;
+  border: 3px solid $accent;
 }
-
 
 .menu {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  width: 300px;
+  width: 250px;
   min-height: calc(75px * 9);
 }
 
 .btn {
   font-family: inherit;
-  font-size: 1.5rem;
-  padding: 0.75em 1.5em;
-  margin: 1em 0;
+  font-size: 1rem;
+  padding: 0.5em 1em;
+  margin: 0.5em 0;
   font-weight: 600;
   outline: none;
-  width: 220px;
+  width: 180px;
   border-radius: 10px;
   border: 2px solid $gray;
   transition: 250ms ease;
@@ -146,7 +147,7 @@ p {
 
 select {
   margin: 0.2em 0 1em 0;
-  font-size: 1.5rem;
+  font-size: 1rem;
   width: 180px;
   text-align: center;
   -webkit-appearance: none;
@@ -162,7 +163,7 @@ option {
 }
 
 .timer {
-  font-size: 2.5rem;
+  font-size: 2rem;
   text-align: center;
   margin-bottom: 1em;
 }
@@ -199,7 +200,62 @@ option {
   cursor: pointer;
 }
 
+.btn-small {
+  display: flex;
+  width: 180px;
+  justify-content: space-between;
+
+  .btn {
+    width: 85px;
+    height: 55px;
+  }
+}
+
 .show {
   opacity: 1;
   display: block;
+}
+
+.notes {
+  position: relative;
+
+  :nth-child(9n-6),
+  :nth-child(9n-3) {
+    border-right: none;
+  }
+}
+
+.note {
+  font-size: 10px;
+  position: absolute;
+}
+
+.note1,
+.note4,
+.note7 {
+  left: 8%;
+}
+
+.note2,
+.note5,
+.note8 {
+  left: 40%;
+}
+
+.note3,
+.note6,
+.note9 {
+  left: 75%;
+}
+
+.note4,
+.note5,
+.note6 {
+  top: 35%;
+}
+
+.note7,
+.note8,
+.note9 {
+  top: 70%;
 }
