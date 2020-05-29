@@ -13,9 +13,9 @@ const App = () => {
   const [timer, setTimer] = useState("00:00");
   const [fullGrid, setFullGrid] = useState(false);
   const [error, setError] = useState(false);
-  const [focus, setFocus] = useState(null);
+  const [focus, setFocus] = useState(0);
   const [note, setNote] = useState(false);
-  const [noteArr, setNoteArr] = useState(Array(81).fill([]));
+  const [noteArr, setNoteArr] = useState();
   const [won, setWon] = useState(false);
 
   const newGame = () => {
@@ -35,9 +35,10 @@ const App = () => {
   };
 
   useEffect(() => {
-    let noteArrCopy = noteArr.map((arr, i) => [i, []])
-    setNoteArr(noteArrCopy);
-  }, [])
+    let array = Array(81).fill([]);
+    array = array.map((arr, i) => [i, []]);
+    setNoteArr(array);
+  }, []);
 
   useEffect(() => {
     let emptyBlock = grid.filter((block) => block === "0" || block === "")
@@ -120,11 +121,11 @@ const App = () => {
     return e.target.value;
   };
 
-  const prevFocusRef  = useRef();
+  const prevFocusRef = useRef();
 
   useEffect(() => {
     prevFocusRef.current = focus;
-  })
+  });
 
   const moveFocus = (e) => {
     let focusCopy = focus;
@@ -138,16 +139,16 @@ const App = () => {
       focusCopy -= 9;
     }
 
-    // if (focusCopy > 80 || focusCopy < 0) return;
-    // setFocus(focusCopy);
+    if (focusCopy > 80 || focusCopy < 0) return;
+    setFocus(focusCopy);
 
-    // let focusElem = document.getElementById(focusCopy);
+    let focusElem = document.getElementById(focusCopy);
 
-    // if (focusElem.classList.contains("block")) {
-    //   focusElem.focus();
-    // } else {
-    //   document.getElementById(prevFocusRef.current).blur();
-    // }
+    if (focusElem.classList.contains("block")) {
+      focusElem.focus();
+    } else {
+      document.getElementById(prevFocusRef.current).blur();
+    }
   };
 
   const handleFocus = (index) => {
@@ -171,27 +172,29 @@ const App = () => {
 
   const noteMode = () => {
     setNote(!note);
+  };
+
+window.addEventListener("keydown", (e) => {
+  if (e.keyCode < 49 || e.keyCode > 57 || !noteArr || !focus) return;
+  let input = Number(e.keyCode - 48);
+  let noteArrayCopy = noteArr;
+  // console.log(noteArr);
+
+  // if (!noteArrayCopy[focus][1]) return;
+
+  if (noteArrayCopy[focus][1].includes(input)) {
+    noteArrayCopy[focus][1] = noteArrayCopy[focus][1]
+      .join("")
+      .replace(input, "")
+      .split("");
+    console.log('remove', noteArrayCopy);
+  } else {
+    noteArrayCopy[focus][1].push(input);
+    console.log('ADD', noteArrayCopy);
   }
 
-
-  useEffect(() => {
-    window.addEventListener("keydown", e => {
-      if (e.keyCode < 49 || e.keyCode > 57) return
-
-      const noteArrayCopy = noteArr;
-
-      const nums = noteArrayCopy[focus][1];
-
-      if (nums.includes(e.keyCode)) {
-        nums.join('').replace(e.keyCode, '').split('');
-      } else {
-        nums.push(e.keyCode);
-      }
-
-      console.log(nums)
-    });
-
-  }, [noteMode])
+  setNoteArr(noteArrayCopy);
+});
 
   return (
     <>
@@ -203,6 +206,8 @@ const App = () => {
           focus={focus}
           handleFocus={handleFocus}
           gameStart={gameStart}
+          note={note}
+          noteArr={noteArr}
         />
         <Menu
           newGame={newGame}

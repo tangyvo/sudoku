@@ -1,5 +1,5 @@
 import React from "react";
-import Notes from './Notes';
+import Notes from "./Notes";
 
 const Block = ({
   userInput,
@@ -9,19 +9,23 @@ const Block = ({
   gameStart,
   focus,
   handleFocus,
+  note,
+  noteArr,
 }) => {
   return (
     <>
       {/* <div className="block">{index}</div> */}
-      <div className="block notes">
-        <Notes />
-      </div>
-      {/* {original !== "0" ? (
+
+      {original !== "0" ? (
         <div
           id={index}
           className={index === focus ? "original focus" : "original"}
         >
           {original}
+        </div>
+      ) : (num === "0" && noteArr[focus][1].length > 0) ? (
+        <div id={index} className={"block notes focus red"}>
+            <Notes key={index} noteArr={noteArr[focus][1]} index={index} />
         </div>
       ) : !gameStart ? (
         <div className="block" id={index}></div>
@@ -35,7 +39,7 @@ const Block = ({
           onChange={(e) => userInput(e, index)}
           onClick={() => handleFocus(index)}
         />
-      )} */}
+      )}
     </>
   );
 };

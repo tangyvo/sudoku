@@ -218,7 +218,6 @@ option {
 
 .notes {
   position: relative;
-
   :nth-child(9n-6),
   :nth-child(9n-3) {
     border-right: none;
@@ -228,6 +227,11 @@ option {
 .note {
   font-size: 10px;
   position: absolute;
+  // display: none;
+}
+
+.red {
+  border: 3px solid red;
 }
 
 .note1,
@@ -259,3 +263,4 @@ option {
 .note9 {
   top: 70%;
 }
+
