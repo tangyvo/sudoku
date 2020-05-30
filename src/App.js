@@ -9,19 +9,38 @@ const App = () => {
   const [gridHistory, setGridHistory] = useState([]);
   const [grid, setGrid] = useState(Array(81).fill(""));
   const [difficulty, setDifficulty] = useState("easy");
-  const [gameStart, setGameStart] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
   const [timer, setTimer] = useState("00:00");
-  const [fullGrid, setFullGrid] = useState(false);
+  const [isFullGrid, setIsFullGrid] = useState(false);
   const [error, setError] = useState(false);
-  const [focus, setFocus] = useState(0);
-  const [note, setNote] = useState(false);
-  const [noteArr, setNoteArr] = useState(Array(81).fill([]).map((arr, i) => [i, []]));
-  const [won, setWon] = useState(false);
+  const [focus, setFocus] = useState(null);
+  const [hasWon, setHasWon] = useState(false);
+  const [noteModeOn, setNoteModeOn] = useState(false);
+  const [noteArr, setNoteArr] = useState(
+    Array(81)
+      .fill([])
+      .map((arr, i) => [i, []])
+  );
 
+  // RESET GRID & STARTING STATES
   const newGame = () => {
-    setGameStart(false);
-    setWon(false);
+    document.querySelector(".btn-start").blur();
+    setIsPlaying(false);
+    setHasWon(false);
+    setNoteModeOn(false);
+    setFocus(null);
+    setNoteArr(
+      Array(81)
+        .fill([])
+        .map((arr, i) => [i, []])
+    );
+    getNewPuzzle();
+    setIsFullGrid(false);
+  };
 
+  // API CALL FETCH NEW SUDOKU PUZZLE
+  const getNewPuzzle = () => {
+    console.log("difficulty", difficulty);
     const api = `https://sugoku.herokuapp.com/board?difficulty=${difficulty}`;
     fetch(api)
       .then((response) => response.json())
@@ -30,26 +49,22 @@ const App = () => {
         setGrid(grid);
         setOrginalGrid(grid);
         setGridHistory([grid]);
-        setGameStart(true);
+        setIsPlaying(true);
       });
   };
 
-  // useEffect(() => {
-  //   let array = Array(81).fill([]);
-  //   array = array.map((arr, i) => [i, []]);
-  //   setNoteArr(array);
-  // }, []);
-
+  // CHECK IF PUZZLE IS COMPLETE
   useEffect(() => {
     let emptyBlock = grid.filter((block) => block === "0" || block === "")
       .length;
-    if (emptyBlock === 0 && gameStart) {
-      setFullGrid(true);
+    if (emptyBlock === 0 && isPlaying) {
+      setIsFullGrid(true);
     } else {
-      setFullGrid(false);
+      setIsFullGrid(false);
     }
   }, [grid]);
 
+  // CHECK IF PLAYER HAS WON
   const handleSumbit = () => {
     let noMatch = false;
     for (let arr of Winners) {
@@ -64,22 +79,26 @@ const App = () => {
       }
     }
 
+    // WON - FREEZE TIMER AND SET WIN STATE
     if (!noMatch) {
       setError(false);
-      setWon(true);
+      setHasWon(true);
       let endTime = timer;
       setTimer(endTime);
     }
   };
 
+  // START TIMER WHEN GAME STARTS AND RESET WHEN PLAYER HAS WON
   useEffect(() => {
-    if (!gameStart) return;
+    if (!isPlaying) return;
 
-    if (won) {
+    if (hasWon) {
       let endTime = timer;
       setTimer(endTime);
       return;
     }
+
+    // FORMAT THE TIME TO 00:00
     let seconds = 0;
     let mins;
     let sec = 0;
@@ -101,15 +120,10 @@ const App = () => {
     return () => {
       clearInterval(timeRef);
     };
-  }, [gameStart, won]);
+  }, [isPlaying, hasWon]);
 
-  const handleDifficulty = (e) => {
-    setDifficulty(e.target.value);
-  };
-
+  // ADD NUMBER INPUT TO GRID
   const userInput = (e, index) => {
-    if (note) return;
-
     const input = Number(e.target.value);
     let gridCopy = [...grid];
     if (input >= 1 || input <= 9) {
@@ -119,25 +133,68 @@ const App = () => {
       gridHistoryCopy.push(gridCopy);
       setGridHistory(gridHistoryCopy);
     }
-
     return e.target.value;
   };
 
+  // STORE PREV FOCUS INDEX AS REF SO FOCUS CAN BE REMOVED LATER
   const prevFocusRef = useRef();
 
   useEffect(() => {
     prevFocusRef.current = focus;
   });
 
-  const moveFocus = (e) => {
+  // EVENT LISTENER FOR KEY PRESS
+  useEffect(() => {
+    window.addEventListener("keydown", handleKeypress);
+    return () => {
+      window.removeEventListener("keydown", handleKeypress);
+    };
+  });
+
+  // CHECKS KEY IS PRESSED AND CALLS REVEVANT FUNCTION
+  const handleKeypress = (e) => {
+    if (e.keyCode >= 37 && e.keyCode <= 40) {
+      handleSetFocus(e.keyCode);
+    } else if (isPlaying && e.keyCode === 32) {
+      handleNoteMode();
+    } else if (e.keyCode >= 49 && e.keyCode <= 57 && focus && noteModeOn) {
+      handleNote(e.keyCode);
+    } else {
+      return;
+    }
+  };
+
+  // ADDS AND REMOVE NUMBER FROM NOTES ARRAY FOR THE FOCUSED BLOCK
+  const handleNote = (key) => {
+    let input = (key - 48).toString();
+    let noteArrayCopy = noteArr;
+
+    if (noteArrayCopy[focus][1].includes(input)) {
+      noteArrayCopy[focus][1] = noteArrayCopy[focus][1]
+        .join("")
+        .replace(input, "")
+        .split("");
+    } else {
+      noteArrayCopy[focus][1].push(input);
+    }
+
+    setNoteArr(noteArrayCopy);
+  };
+
+// TOGGLE BETWEEN ON/OFF NOTE MODE
+  const handleNoteMode = () => {
+    setNoteModeOn(!noteModeOn);
+  };
+
+  const handleSetFocus = (key) => {
     let focusCopy = focus;
-    if (e.keyCode === 39) {
+    if (key === 39) {
       focusCopy += 1;
-    } else if (e.keyCode === 40) {
+    } else if (key === 40) {
       focusCopy += 9;
-    } else if (e.keyCode === 37) {
+    } else if (key === 37) {
       focusCopy -= 1;
-    } else if (e.keyCode === 38) {
+    } else if (key === 38) {
       focusCopy -= 9;
     }
 
@@ -146,30 +203,33 @@ const App = () => {
 
     let focusElem = document.getElementById(focusCopy);
 
-    if (focusElem.classList.contains("block")) {
+    if (
+      focusElem.classList.contains("block") ||
+      focusElem.classList.contains("note")
+    ) {
       focusElem.focus();
     } else {
       document.getElementById(prevFocusRef.current).blur();
     }
   };
 
+  // Re-focus cursor on input after turning off note mode
+  useEffect(() => {
+    if (noteModeOn || !focus) return;
+    let focusCopy = focus;
+    let focusElem = document.getElementById(focusCopy);
+    setFocus(focusCopy);
+
+    if (focusElem.classList.contains("block")) {
+      focusElem.focus();
+    } else {
+      document.getElementById(prevFocusRef.current).blur();
+    }
+  }, [noteModeOn]);
+
   const handleFocus = (index) => {
     setFocus(index);
   };
-
-  useEffect(() => {
-    window.addEventListener("keydown", moveFocus);
-    return () => {
-      window.removeEventListener("keydown", moveFocus);
-    };
-  });
-
-  useEffect(() => {
-    window.addEventListener("keydown", handleNote);
-    return () => {
-      window.removeEventListener("keydown", handleNote);
-    };
-  });
 
   const handleUndo = () => {
     let lastStep = gridHistory.length - 2;
@@ -177,29 +237,6 @@ const App = () => {
     setGrid(gridHistory[lastStep]);
     let updateGridHistory = gridHistory.splice(0, gridHistory.length - 1);
     setGridHistory(updateGridHistory);
-  };
-
-  const noteMode = () => {
-    setNote(!note);
-  };
-
-  const handleNote = (e) => {
-    if (e.keyCode < 49 || e.keyCode > 57 || !focus || !note) return;
-    let input = (e.keyCode - 48).toString();
-    let noteArrayCopy = noteArr;
-
-    if (noteArrayCopy[focus][1].includes(input)) {
-      noteArrayCopy[focus][1] = noteArrayCopy[focus][1]
-        .join("")
-        .replace(input, "")
-        .split("");
-      console.log("remove", noteArrayCopy);
-    } else {
-      noteArrayCopy[focus][1].push(input);
-      console.log("ADD", noteArrayCopy);
-    }
-
-    setNoteArr(noteArrayCopy);
   };
 
   return (
@@ -211,24 +248,25 @@ const App = () => {
           userInput={userInput}
           focus={focus}
           handleFocus={handleFocus}
-          gameStart={gameStart}
-          note={note}
+          isPlaying={isPlaying}
+          noteModeOn={noteModeOn}
           noteArr={noteArr}
         />
         <Menu
           newGame={newGame}
-          handleDifficulty={handleDifficulty}
+          handleDifficulty={(e) => setDifficulty(e.target.value)}
           timer={timer}
-          fullGrid={fullGrid}
+          isFullGrid={isFullGrid}
           handleSubmit={handleSumbit}
           error={error}
           undo={handleUndo}
-          gameStart={gameStart}
-          noteMode={noteMode}
-          note={note}
+          isPlaying={isPlaying}
+          handleNoteMode={handleNoteMode}
+          noteModeOn={noteModeOn}
+          gridHistory={gridHistory}
         />
       </div>
-      <Won won={won} newGame={newGame} />
+      <Won won={hasWon} newGame={newGame} />
     </>
   );
 };

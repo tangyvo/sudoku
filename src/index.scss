@@ -2,7 +2,6 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  // border: 1px solid red;
 }
 
 body {
@@ -15,23 +14,51 @@ body {
   letter-spacing: 0.2em;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
-}
+/* -------------------
+COLOUR VARIABLES
+------------------- */
 
 $dark-gray: rgb(34, 34, 34);
 $gray: rgb(210, 210, 210);
 $light-gray: rgb(238, 238, 238);
 $primary: rgb(255, 242, 168);
 $accent: rgb(255, 174, 0);
+$note: rgb(124, 124, 255);
+
+/* -------------------
+TYPOGRAPHY
+------------------- */
 
 .title {
   text-align: center;
-  padding: 1em 0;
+  padding: 0.5em 0;
   font-size: 3rem;
-  margin-top: 4rem;
+  margin-top: 5rem;
 }
+
+.subtitle {
+  font-size: 1rem;
+}
+
+.error {
+  padding: 0.75em 0;
+  text-align: center;
+  font-size: 0.8rem;
+  width: 180px;
+  opacity: 0;
+  border: 3px dashed red;
+  color: red;
+}
+
+.note-message {
+  font-size: 0.6rem;
+  width: 180px;
+  text-align: center;
+}
+
+/* -------------------
+LAYOUT
+------------------- */
 
 .app {
   display: flex;
@@ -51,7 +78,7 @@ $accent: rgb(255, 174, 0);
 
   :nth-child(9n-6),
   :nth-child(9n-3) {
-    border-right: 5px solid $dark-gray;
+    border-right: 3px solid $dark-gray;
   }
 
   :nth-child(19),
@@ -72,39 +99,8 @@ $accent: rgb(255, 174, 0);
   :nth-child(52),
   :nth-child(53),
   :nth-child(54) {
-    border-bottom: 5px solid black;
+    border-bottom: 3px solid black;
   }
-}
-
-.block,
-.original {
-  width: 50px;
-  height: 50px;
-  border: 2px solid $gray;
-  text-align: center;
-  font-size: 1.5rem;
-  font-weight: 600;
-  outline: none;
-  background-color: white;
-  cursor: pointer;
-  color: $accent;
-
-  // &:focus {
-  //   border: 5px solid $accent;
-  // }
-}
-
-.original {
-  background-color: $light-gray;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 2px solid $gray;
-  color: $dark-gray;
-}
-
-.focus {
-  border: 3px solid $accent;
 }
 
 .menu {
@@ -116,104 +112,32 @@ $accent: rgb(255, 174, 0);
   min-height: calc(75px * 9);
 }
 
-.btn {
-  font-family: inherit;
-  font-size: 1rem;
-  padding: 0.5em 1em;
-  margin: 0.5em 0;
-  font-weight: 600;
-  outline: none;
-  width: 180px;
-  border-radius: 10px;
+/* -------------------
+BLOCKS
+------------------- */
+
+.block,
+.original,
+.notes {
+  width: 50px;
+  height: 50px;
   border: 2px solid $gray;
-  transition: 250ms ease;
-  color: black;
-}
-
-.active {
-  background-color: $accent;
-  cursor: pointer;
-
-  &:hover,
-  &:focus {
-    color: white;
-    letter-spacing: 0.1em;
-  }
-}
-
-p {
-  font-size: 1.2rem;
-}
-
-select {
-  margin: 0.2em 0 1em 0;
-  font-size: 1rem;
-  width: 180px;
-  text-align: center;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  padding: 0.5em;
-}
-
-option {
-  font-family: inherit;
-
-  text-align: center;
-}
-
-.timer {
-  font-size: 2rem;
-  text-align: center;
-  margin-bottom: 1em;
-}
-
-.error {
-  padding: 0.75em 0;
   text-align: center;
   font-size: 1.5rem;
-  height: 100px;
-  width: 180px;
-  opacity: 0;
-  border: 3px dashed $accent;
-}
-
-.won {
-  display: none;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  padding: 3em;
-  background-color: rgba(0, 0, 0, 0.6);
-  color: white;
-  border-radius: 10px;
-  text-align: center;
-
-  p {
-    font-size: 3rem;
-    font-weight: 600;
-  }
-}
-
-.btn-newgame {
+  font-weight: 600;
+  outline: none;
+  background-color: white;
   cursor: pointer;
+  color: $accent;
 }
 
-.btn-small {
+.original {
+  background-color: $light-gray;
   display: flex;
-  width: 180px;
-  justify-content: space-between;
-
-  .btn {
-    width: 85px;
-    height: 55px;
-  }
-}
-
-.show {
-  opacity: 1;
-  display: block;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid $gray;
+  color: $dark-gray;
 }
 
 .notes {
@@ -226,12 +150,12 @@ option {
 
 .note {
   font-size: 10px;
+  color: $note;
   position: absolute;
-  // display: none;
 }
 
-.red {
-  border: 3px solid red;
+.note-mode {
+  border: 3px solid $note;
 }
 
 .note1,
@@ -264,3 +188,110 @@ option {
   top: 70%;
 }
 
+.focus {
+  display: block;
+  border: 3px solid $accent;
+}
+
+.original-focus {
+  border: 3px solid $dark-gray;
+}
+
+/* -------------------
+BUTTONS
+------------------- */
+
+.btn {
+  font-family: inherit;
+  font-size: 1rem;
+  padding: 0.5em 1em;
+  margin: 0.5em 0;
+  font-weight: 600;
+  outline: none;
+  width: 180px;
+  border-radius: 10px;
+  border: 2px solid $gray;
+  transition: 250ms ease;
+  color: black;
+  background-color: $light-gray;
+}
+
+.active {
+  background-color: $accent;
+  cursor: pointer;
+
+  &:hover,
+  &:focus {
+    color: white;
+    letter-spacing: 0.1em;
+  }
+}
+
+.btn-newgame {
+  cursor: pointer;
+}
+
+.btn-small {
+  display: flex;
+  width: 180px;
+  justify-content: space-between;
+
+  .btn {
+    width: 85px;
+    height: 55px;
+  }
+}
+
+.btn-notes {
+  background-color: $note;
+  color: white;
+  cursor: pointer;
+}
+
+/* -------------------
+MENU COMPONENTS
+------------------- */
+
+.diffculty {
+  margin: 0.2em 0 1em 0;
+  font-size: 1rem;
+  width: 180px;
+  text-align: center;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  padding: 0.5em;
+}
+
+.timer {
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 1em;
+}
+
+/* -------------------
+OTHER
+------------------- */
+
+.won {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 3em;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  border-radius: 10px;
+  text-align: center;
+
+  p {
+    font-size: 3rem;
+    font-weight: 600;
+  }
+}
+
+.show {
+  opacity: 1;
+  display: block;
+}

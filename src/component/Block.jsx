@@ -1,36 +1,38 @@
 import React from "react";
-import Notes from "./Notes";
 
 const Block = ({
   userInput,
   num,
   original,
   index,
-  gameStart,
+  isPlaying,
   focus,
   handleFocus,
+  noteModeOn,
   noteArr,
 }) => {
   return (
     <>
-      {/* <div className="block">{index}</div> */}
-
       {original !== "0" ? (
         <div
           id={index}
-          className={index === focus ? "original focus" : "original"}
+          className={(index === focus ? "original-focus original" : "original")}
         >
           {original}
         </div>
-      ) : num === "0" && noteArr[1].length > 0 ? (
-        <div id={index} className={focus === index ? 'block focus notes' : 'block notes'}>
-          {noteArr[1].map((val, ind) => (
+      ) : num === "0" && (noteArr[1].length > 0 || noteModeOn) ? (
+        <div
+          id={index}
+            onClick={() => handleFocus(index)}
+          className={(focus === index && noteModeOn) ? "note-mode notes" : "notes"}
+        >
+          {noteArr[1].map(val => (
             <div key={Math.random()} className={`note note${val} show`}>
               {val}
             </div>
           ))}
         </div>
-      ) : !gameStart ? (
+      ) : !isPlaying ? (
         <div className="block" id={index}></div>
       ) : (
         <input
