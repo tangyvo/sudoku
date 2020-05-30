@@ -16,7 +16,7 @@ const Game = ({ grid, originalGrid, userInput, gameStart, focus, handleFocus, no
           focus={focus}
           handleFocus={handleFocus}
           note={note}
-          noteArr={noteArr}
+          noteArr={noteArr[i]}
         />
       ))}
     </div>

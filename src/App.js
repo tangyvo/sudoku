@@ -15,7 +15,7 @@ const App = () => {
   const [error, setError] = useState(false);
   const [focus, setFocus] = useState(0);
   const [note, setNote] = useState(false);
-  const [noteArr, setNoteArr] = useState();
+  const [noteArr, setNoteArr] = useState(Array(81).fill([]).map((arr, i) => [i, []]));
   const [won, setWon] = useState(false);
 
   const newGame = () => {
@@ -34,11 +34,11 @@ const App = () => {
       });
   };
 
-  useEffect(() => {
-    let array = Array(81).fill([]);
-    array = array.map((arr, i) => [i, []]);
-    setNoteArr(array);
-  }, []);
+  // useEffect(() => {
+  //   let array = Array(81).fill([]);
+  //   array = array.map((arr, i) => [i, []]);
+  //   setNoteArr(array);
+  // }, []);
 
   useEffect(() => {
     let emptyBlock = grid.filter((block) => block === "0" || block === "")
@@ -108,6 +108,8 @@ const App = () => {
   };
 
   const userInput = (e, index) => {
+    if (note) return;
+
     const input = Number(e.target.value);
     let gridCopy = [...grid];
     if (input >= 1 || input <= 9) {
@@ -162,6 +164,13 @@ const App = () => {
     };
   });
 
+  useEffect(() => {
+    window.addEventListener("keydown", handleNote);
+    return () => {
+      window.removeEventListener("keydown", handleNote);
+    };
+  });
+
   const handleUndo = () => {
     let lastStep = gridHistory.length - 2;
     if (lastStep < 0) return;
@@ -174,27 +183,24 @@ const App = () => {
     setNote(!note);
   };
 
-window.addEventListener("keydown", (e) => {
-  if (e.keyCode < 49 || e.keyCode > 57 || !noteArr || !focus) return;
-  let input = Number(e.keyCode - 48);
-  let noteArrayCopy = noteArr;
-  // console.log(noteArr);
+  const handleNote = (e) => {
+    if (e.keyCode < 49 || e.keyCode > 57 || !focus || !note) return;
+    let input = (e.keyCode - 48).toString();
+    let noteArrayCopy = noteArr;
 
-  // if (!noteArrayCopy[focus][1]) return;
+    if (noteArrayCopy[focus][1].includes(input)) {
+      noteArrayCopy[focus][1] = noteArrayCopy[focus][1]
+        .join("")
+        .replace(input, "")
+        .split("");
+      console.log("remove", noteArrayCopy);
+    } else {
+      noteArrayCopy[focus][1].push(input);
+      console.log("ADD", noteArrayCopy);
+    }
 
-  if (noteArrayCopy[focus][1].includes(input)) {
-    noteArrayCopy[focus][1] = noteArrayCopy[focus][1]
-      .join("")
-      .replace(input, "")
-      .split("");
-    console.log('remove', noteArrayCopy);
-  } else {
-    noteArrayCopy[focus][1].push(input);
-    console.log('ADD', noteArrayCopy);
-  }
-
-  setNoteArr(noteArrayCopy);
-});
+    setNoteArr(noteArrayCopy);
+  };
 
   return (
     <>

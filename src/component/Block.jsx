@@ -9,7 +9,6 @@ const Block = ({
   gameStart,
   focus,
   handleFocus,
-  note,
   noteArr,
 }) => {
   return (
@@ -23,9 +22,13 @@ const Block = ({
         >
           {original}
         </div>
-      ) : (num === "0" && noteArr[focus][1].length > 0) ? (
-        <div id={index} className={"block notes focus red"}>
-            <Notes key={index} noteArr={noteArr[focus][1]} index={index} />
+      ) : num === "0" && noteArr[1].length > 0 ? (
+        <div id={index} className={focus === index ? 'block focus notes' : 'block notes'}>
+          {noteArr[1].map((val, ind) => (
+            <div key={Math.random()} className={`note note${val} show`}>
+              {val}
+            </div>
+          ))}
         </div>
       ) : !gameStart ? (
         <div className="block" id={index}></div>
