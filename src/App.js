@@ -80,6 +80,7 @@ const App = () => {
       if (combination !== "123456789") {
         noMatch = true;
         setError(true);
+        console.log(arr);
       }
     }
 
@@ -87,6 +88,7 @@ const App = () => {
     if (!noMatch) {
       setError(false);
       setHasWon(true);
+      setShowWonModal(true);
       let endTime = timer;
       setTimer(endTime);
     }
@@ -170,7 +172,7 @@ const App = () => {
       setNoteModeOn(!noteModeOn);
     }
     // 1-9 NUBMER KEYS
-    else if (e.keyCode >= 49 && e.keyCode <= 57 && focus && noteModeOn) {
+    else if (e.keyCode >= 49 && e.keyCode <= 57 && focus >= 0 && noteModeOn) {
       handleNote(e.keyCode);
     } else {
       return;
@@ -179,6 +181,7 @@ const App = () => {
 
   // ADDS AND REMOVE NUMBER FROM NOTES ARRAY FOR THE FOCUSED BLOCK
   const handleNote = (key) => {
+    console.log('focus', focus, key)
     let input = (key - 48).toString();
     let noteArrayCopy = noteArr;
 

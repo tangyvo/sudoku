@@ -13,6 +13,7 @@ const Block = ({
 }) => {
   return (
     <>
+    {/* <div className="block">{index}</div> */}
       {original !== "0" ? (
         <div
           id={index}
@@ -20,7 +21,7 @@ const Block = ({
         >
           {original}
         </div>
-      ) : num === "0" && (noteArr[1].length > 0 || noteModeOn) ? (
+      ) : (num === "0" || num === '') && (noteArr[1].length > 0 || noteModeOn) ? (
         <div
           id={index}
             onClick={() => handleFocus(index)}

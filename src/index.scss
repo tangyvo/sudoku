@@ -41,12 +41,12 @@ TYPOGRAPHY
 }
 
 .error {
+  opacity: 0;
   padding: 1em 0;
   color: $dark-primary;
   font-size: 0.9rem;
   width: 180px;
   text-align: center;
-  transform: scale(0);
   font-style: italic;
 }
 
@@ -57,7 +57,7 @@ TYPOGRAPHY
 }
 
 h3 {
-  font-size: 1.5rem;
+  font-size: 1rem;
   text-decoration: underline;
   margin: 0.5em 0;
 }
@@ -84,7 +84,7 @@ LAYOUT
 
   :nth-child(9n-6),
   :nth-child(9n-3) {
-    border-right: 5px solid $dark-primary;
+    border-right: 3px solid $dark-primary;
   }
 
   :nth-child(19),
@@ -105,7 +105,7 @@ LAYOUT
   :nth-child(52),
   :nth-child(53),
   :nth-child(54) {
-    border-bottom: 5px solid black;
+    border-bottom: 3px solid black;
   }
 }
 
@@ -115,7 +115,7 @@ LAYOUT
   justify-content: flex-start;
   align-items: center;
   width: 250px;
-  max-height: calc(52px * 9);
+  min-height: calc(50px * 9);
 }
 
 /* -------------------
@@ -295,13 +295,14 @@ MODALS
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  padding: 3em;
-  background-color: rgba(0, 0, 0, 0.85);
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.9);
   color: $white;
   border-radius: 10px;
   text-align: center;
-  height: 350px;
+  height: 380px;
   width: 450px;
+  max-width: 90vw;
 
   p {
     font-size: 3rem;
@@ -314,15 +315,15 @@ MODALS
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   height: 100%;
-  padding: 0 40px;
+  padding: 0 10px;
 }
 
 .modal-close {
   position: absolute;
-  top: -50px;
-  right: -40px;
+  top: -15px;
+  right: -10px;
   padding: 0 0.2em;
   font-size: 3rem;
   background-color: transparent;
@@ -345,6 +346,8 @@ MODALS
 
 li {
   padding: 0.5em 0;
+  font-size: 1em;
+  list-style: none;
 }
 
 .show {
@@ -352,20 +355,23 @@ li {
   display: block;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 700px) {
   .app {
-    flex-direction: column-reverse;
+    flex-direction: column;
     padding: 20px 0;
   }
 
   .grid {
     margin: 10px 0;
+    border: 3px solid $dark-primary;
   }
 
   .block,
   .original,
   .notes {
-    height: 45px;
-    width: 45px;
+    height: 40px;
+    width: 40px;
+    font-size: 1.2rem;
+    font-weight: 500;
   }
 }

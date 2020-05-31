@@ -56,16 +56,13 @@ const Menu = ({
 
       <BrowserView>
         <p className="note-message">
-          Press the spacebar key to switch on/off note mode.
+          <strong>IN NOTE MODE:</strong> type numbers 1-9 to add and remove from cell.
         </p>
       </BrowserView>
 
       <MobileView>
-        <p className="note-message">
-          Note mode is not available on mobile.
-        </p>
+        <p className="note-message">Note mode is not available on mobile.</p>
       </MobileView>
-
       <button
         className={isFullGrid ? "btn btn-submit active" : "btn btn-submit"}
         disabled={isFullGrid ? false : true}
@@ -73,7 +70,7 @@ const Menu = ({
       >
         Submit
       </button>
-      <p className={error ? "error show" : "error show"}>Oops! Try again</p>
+      <p className={error ? "error show" : "error"}>Oops! Try again</p>
     </nav>
   );
 };
