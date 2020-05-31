@@ -2,6 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  // border: 1px solid red
 }
 
 body {
@@ -31,9 +32,8 @@ TYPOGRAPHY
 
 .title {
   text-align: center;
-  padding: 0.5em 0;
+  padding-bottom: 0.5em;
   font-size: 3rem;
-  margin-top: 5rem;
 }
 
 .subtitle {
@@ -115,7 +115,7 @@ LAYOUT
   justify-content: flex-start;
   align-items: center;
   width: 250px;
-  min-height: calc(75px * 9);
+  max-height: calc(52px * 9);
 }
 
 /* -------------------
@@ -301,7 +301,7 @@ MODALS
   border-radius: 10px;
   text-align: center;
   height: 350px;
-  width: 500px;
+  width: 450px;
 
   p {
     font-size: 3rem;
@@ -350,4 +350,22 @@ li {
 .show {
   opacity: 1;
   display: block;
+}
+
+@media (max-width: 600px) {
+  .app {
+    flex-direction: column-reverse;
+    padding: 20px 0;
+  }
+
+  .grid {
+    margin: 10px 0;
+  }
+
+  .block,
+  .original,
+  .notes {
+    height: 45px;
+    width: 45px;
+  }
 }

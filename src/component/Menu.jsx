@@ -1,4 +1,5 @@
 import React from "react";
+import { BrowserView, MobileView } from "react-device-detect";
 
 const Menu = ({
   showModal,
@@ -53,7 +54,17 @@ const Menu = ({
         </button>
       </div>
 
-      <p className="note-message">Press the spacebar key to switch on/off note mode.</p>
+      <BrowserView>
+        <p className="note-message">
+          Press the spacebar key to switch on/off note mode.
+        </p>
+      </BrowserView>
+
+      <MobileView>
+        <p className="note-message">
+          Note mode is not available on mobile.
+        </p>
+      </MobileView>
 
       <button
         className={isFullGrid ? "btn btn-submit active" : "btn btn-submit"}
