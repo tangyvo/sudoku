@@ -38,7 +38,7 @@ const App = () => {
     setIsFullGrid(false);
   };
 
-  // API CALL FETCH NEW SUDOKU PUZZLE
+  // API CALL TO FETCH NEW SUDOKU PUZZLE
   const getNewPuzzle = () => {
     console.log("difficulty", difficulty);
     const api = `https://sugoku.herokuapp.com/board?difficulty=${difficulty}`;
@@ -79,7 +79,7 @@ const App = () => {
       }
     }
 
-    // WON - FREEZE TIMER AND SET WIN STATE
+    // IF WON - FREEZE TIMER AND SET WIN STATE
     if (!noMatch) {
       setError(false);
       setHasWon(true);
@@ -98,29 +98,33 @@ const App = () => {
       return;
     }
 
-    // FORMAT THE TIME TO 00:00
     let seconds = 0;
-    let mins;
-    let sec = 0;
     const timeRef = setInterval(() => {
       seconds += 1;
-      if (seconds >= 60) {
-        mins = Math.floor(seconds / 60);
-        sec = seconds % 60;
-        mins = mins === 0 ? "00" : mins <= 9 ? `0${mins}` : mins;
-      } else {
-        sec = seconds;
-        mins = "00";
-      }
-      sec = sec === 0 ? "00" : sec <= 9 ? `0${sec}` : sec;
-      let time = `${mins}:${sec}`;
-      setTimer(time);
+      formatTime(seconds);
     }, 1000);
 
     return () => {
       clearInterval(timeRef);
     };
   }, [isPlaying, hasWon]);
+
+  // FORMAT TIME TO 00:00
+  const formatTime = (seconds) => {
+        let mins;
+        let sec = 0;
+    if (seconds >= 60) {
+      mins = Math.floor(seconds / 60);
+      sec = seconds % 60;
+      mins = mins === 0 ? "00" : mins <= 9 ? `0${mins}` : mins;
+    } else {
+      sec = seconds;
+      mins = "00";
+    }
+    sec = sec === 0 ? "00" : sec <= 9 ? `0${sec}` : sec;
+    let time = `${mins}:${sec}`;
+    setTimer(time);
+  };
 
   // ADD NUMBER INPUT TO GRID
   const userInput = (e, index) => {
@@ -153,11 +157,16 @@ const App = () => {
 
   // CHECKS KEY IS PRESSED AND CALLS REVEVANT FUNCTION
   const handleKeypress = (e) => {
+    // UP, DOWN, LEFT AND RIGHT ARROW KEYS
     if (e.keyCode >= 37 && e.keyCode <= 40) {
       handleSetFocus(e.keyCode);
-    } else if (isPlaying && e.keyCode === 32) {
-      handleNoteMode();
-    } else if (e.keyCode >= 49 && e.keyCode <= 57 && focus && noteModeOn) {
+    }
+    // SPACEBAR KEY (TOGGLE NOTE MODE ON/OFF)
+    else if (isPlaying && e.keyCode === 32) {
+      setNoteModeOn(!noteModeOn);
+    }
+    // 1-9 NUBMER KEYS
+    else if (e.keyCode >= 49 && e.keyCode <= 57 && focus && noteModeOn) {
       handleNote(e.keyCode);
     } else {
       return;
@@ -181,11 +190,7 @@ const App = () => {
     setNoteArr(noteArrayCopy);
   };
 
-// TOGGLE BETWEEN ON/OFF NOTE MODE
-  const handleNoteMode = () => {
-    setNoteModeOn(!noteModeOn);
-  };
-
+  // UPDATE FOCUS STATE WHEN UP, DOWN, LEFT AND ARROW KEYS ARE PRESSED
   const handleSetFocus = (key) => {
     let focusCopy = focus;
     if (key === 39) {
@@ -213,7 +218,7 @@ const App = () => {
     }
   };
 
-  // Re-focus cursor on input after turning off note mode
+  // REFOCUS CURSOR ON CURRENT INPUT BLOCK AFTER SWITCHING OFF NOTE MODE
   useEffect(() => {
     if (noteModeOn || !focus) return;
     let focusCopy = focus;
@@ -227,10 +232,7 @@ const App = () => {
     }
   }, [noteModeOn]);
 
-  const handleFocus = (index) => {
-    setFocus(index);
-  };
-
+  // UNDO - REVERT GRID TO LAST STATE
   const handleUndo = () => {
     let lastStep = gridHistory.length - 2;
     if (lastStep < 0) return;
@@ -247,7 +249,7 @@ const App = () => {
           originalGrid={originalGrid}
           userInput={userInput}
           focus={focus}
-          handleFocus={handleFocus}
+          handleFocus={(index) => setFocus(index)}
           isPlaying={isPlaying}
           noteModeOn={noteModeOn}
           noteArr={noteArr}
@@ -261,7 +263,7 @@ const App = () => {
           error={error}
           undo={handleUndo}
           isPlaying={isPlaying}
-          handleNoteMode={handleNoteMode}
+          handleNoteMode={() => setNoteModeOn(!noteModeOn)}
           noteModeOn={noteModeOn}
           gridHistory={gridHistory}
         />

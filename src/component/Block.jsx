@@ -16,7 +16,7 @@ const Block = ({
       {original !== "0" ? (
         <div
           id={index}
-          className={(index === focus ? "original-focus original" : "original")}
+          className={(index === focus ? "na-focus original" : "original")}
         >
           {original}
         </div>
@@ -24,7 +24,7 @@ const Block = ({
         <div
           id={index}
             onClick={() => handleFocus(index)}
-          className={(focus === index && noteModeOn) ? "note-mode notes" : "notes"}
+          className={(focus === index && noteModeOn) ? "note-mode notes" : focus === index ? "notes na-focus" : 'notes'}
         >
           {noteArr[1].map(val => (
             <div key={Math.random()} className={`note note${val} show`}>

@@ -18,13 +18,12 @@ body {
 COLOUR VARIABLES
 ------------------- */
 
-$dark-gray: rgb(34, 34, 34);
-$gray: rgb(210, 210, 210);
-$light-gray: rgb(238, 238, 238);
-$primary: rgb(255, 242, 168);
-$accent: rgb(255, 174, 0);
-$note: rgb(124, 124, 255);
-
+$dark-primary: #0a1747;
+$primary: rgb(200, 209, 243);
+$white: rgb(250, 251, 255);
+$lighter-gray: rgb(223, 229, 250);
+$accent: rgb(255, 255, 112);
+$secondary: rgb(130, 130, 245);
 /* -------------------
 TYPOGRAPHY
 ------------------- */
@@ -65,7 +64,7 @@ LAYOUT
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-color: $primary;
+  background-color: $white;
   position: relative;
 }
 
@@ -73,12 +72,12 @@ LAYOUT
   display: grid;
   grid-template-columns: repeat(9, 1fr);
   grid-template-rows: repeat(9, 1fr);
-  border: 5px solid $dark-gray;
+  border: 5px solid $dark-primary;
   border-radius: 5px;
 
   :nth-child(9n-6),
   :nth-child(9n-3) {
-    border-right: 3px solid $dark-gray;
+    border-right: 5px solid $dark-primary;
   }
 
   :nth-child(19),
@@ -99,7 +98,7 @@ LAYOUT
   :nth-child(52),
   :nth-child(53),
   :nth-child(54) {
-    border-bottom: 3px solid black;
+    border-bottom: 5px solid black;
   }
 }
 
@@ -121,23 +120,22 @@ BLOCKS
 .notes {
   width: 50px;
   height: 50px;
-  border: 2px solid $gray;
+  border: 2px solid $primary;
   text-align: center;
   font-size: 1.5rem;
   font-weight: 600;
   outline: none;
-  background-color: white;
+  background-color: $white;
   cursor: pointer;
-  color: $accent;
+  color: $dark-primary;
 }
 
 .original {
-  background-color: $light-gray;
+  background-color: $lighter-gray;
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 2px solid $gray;
-  color: $dark-gray;
+  color: $dark-primary;
 }
 
 .notes {
@@ -150,12 +148,12 @@ BLOCKS
 
 .note {
   font-size: 10px;
-  color: $note;
+  color: $dark-primary;
   position: absolute;
 }
 
 .note-mode {
-  border: 3px solid $note;
+  background-color: $secondary;
 }
 
 .note1,
@@ -190,11 +188,11 @@ BLOCKS
 
 .focus {
   display: block;
-  border: 3px solid $accent;
+  background-color: $accent;
 }
 
-.original-focus {
-  border: 3px solid $dark-gray;
+.na-focus {
+  border: 3px solid $dark-primary;
 }
 
 /* -------------------
@@ -210,10 +208,10 @@ BUTTONS
   outline: none;
   width: 180px;
   border-radius: 10px;
-  border: 2px solid $gray;
+  border: 2px solid $primary;
   transition: 250ms ease;
   color: black;
-  background-color: $light-gray;
+  background-color: $white;
 }
 
 .active {
@@ -222,7 +220,6 @@ BUTTONS
 
   &:hover,
   &:focus {
-    color: white;
     letter-spacing: 0.1em;
   }
 }
@@ -243,9 +240,14 @@ BUTTONS
 }
 
 .btn-notes {
-  background-color: $note;
-  color: white;
+  background-color: $secondary;
+  color: $white;
   cursor: pointer;
+
+  &:hover,
+  &:focus {
+    letter-spacing: 0.1em;
+  }
 }
 
 /* -------------------
@@ -281,7 +283,7 @@ OTHER
   transform: translate(-50%, -50%);
   padding: 3em;
   background-color: rgba(0, 0, 0, 0.6);
-  color: white;
+  color: $white;
   border-radius: 10px;
   text-align: center;
 
