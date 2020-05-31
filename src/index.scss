@@ -24,6 +24,7 @@ $white: rgb(250, 251, 255);
 $lighter-gray: rgb(223, 229, 250);
 $accent: rgb(255, 255, 112);
 $secondary: rgb(130, 130, 245);
+
 /* -------------------
 TYPOGRAPHY
 ------------------- */
@@ -40,19 +41,25 @@ TYPOGRAPHY
 }
 
 .error {
-  padding: 0.75em 0;
-  text-align: center;
-  font-size: 0.8rem;
+  padding: 1em 0;
+  color: $dark-primary;
+  font-size: 0.9rem;
   width: 180px;
-  opacity: 0;
-  border: 3px dashed red;
-  color: red;
+  text-align: center;
+  transform: scale(0);
+  font-style: italic;
 }
 
 .note-message {
   font-size: 0.6rem;
   width: 180px;
   text-align: center;
+}
+
+h3 {
+  font-size: 1.5rem;
+  text-decoration: underline;
+  margin: 0.5em 0;
 }
 
 /* -------------------
@@ -225,7 +232,14 @@ BUTTONS
 }
 
 .btn-newgame {
+  background-color: $primary;
   cursor: pointer;
+
+  &:hover,
+  &:focus {
+    background-color: transparent;
+    color: white;
+  }
 }
 
 .btn-small {
@@ -251,7 +265,7 @@ BUTTONS
 }
 
 /* -------------------
-MENU COMPONENTS
+OTHER MENU COMPONENTS
 ------------------- */
 
 .diffculty {
@@ -272,25 +286,65 @@ MENU COMPONENTS
 }
 
 /* -------------------
-OTHER
+MODALS
 ------------------- */
 
-.won {
+.modal {
   display: none;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   padding: 3em;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0.85);
   color: $white;
   border-radius: 10px;
   text-align: center;
+  height: 350px;
+  width: 500px;
 
   p {
     font-size: 3rem;
     font-weight: 600;
   }
+}
+
+.modal-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  padding: 0 40px;
+}
+
+.modal-close {
+  position: absolute;
+  top: -50px;
+  right: -40px;
+  padding: 0 0.2em;
+  font-size: 3rem;
+  background-color: transparent;
+  color: $white;
+  border: none;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+
+  &:focus,
+  &:hover {
+    color: $primary;
+    outline: none;
+  }
+
+  &:active {
+    transform: scale(0.9);
+  }
+}
+
+li {
+  padding: 0.5em 0;
 }
 
 .show {

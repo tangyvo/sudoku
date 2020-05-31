@@ -3,6 +3,7 @@ import Game from "./component/Game";
 import Menu from "./component/Menu";
 import Won from "./component/Won";
 import { Winners } from "./component/WinningCombination";
+import NewGame from "./component/NewGame";
 
 const App = () => {
   const [originalGrid, setOrginalGrid] = useState(Array(81).fill("0"));
@@ -16,6 +17,8 @@ const App = () => {
   const [focus, setFocus] = useState(null);
   const [hasWon, setHasWon] = useState(false);
   const [noteModeOn, setNoteModeOn] = useState(false);
+  const [showWonModal, setShowWonModal] = useState(false);
+  const [showNewGameModal, setShowNewGameModal] = useState(false);
   const [noteArr, setNoteArr] = useState(
     Array(81)
       .fill([])
@@ -23,7 +26,9 @@ const App = () => {
   );
 
   // RESET GRID & STARTING STATES
-  const newGame = () => {
+  const startGame = () => {
+    setShowNewGameModal(false);
+    setShowWonModal(false);
     document.querySelector(".btn-start").blur();
     setIsPlaying(false);
     setHasWon(false);
@@ -40,7 +45,6 @@ const App = () => {
 
   // API CALL TO FETCH NEW SUDOKU PUZZLE
   const getNewPuzzle = () => {
-    console.log("difficulty", difficulty);
     const api = `https://sugoku.herokuapp.com/board?difficulty=${difficulty}`;
     fetch(api)
       .then((response) => response.json())
@@ -111,8 +115,8 @@ const App = () => {
 
   // FORMAT TIME TO 00:00
   const formatTime = (seconds) => {
-        let mins;
-        let sec = 0;
+    let mins;
+    let sec = 0;
     if (seconds >= 60) {
       mins = Math.floor(seconds / 60);
       sec = seconds % 60;
@@ -255,7 +259,7 @@ const App = () => {
           noteArr={noteArr}
         />
         <Menu
-          newGame={newGame}
+          showModal={() => setShowNewGameModal(true)}
           handleDifficulty={(e) => setDifficulty(e.target.value)}
           timer={timer}
           isFullGrid={isFullGrid}
@@ -268,7 +272,17 @@ const App = () => {
           gridHistory={gridHistory}
         />
       </div>
-      <Won won={hasWon} newGame={newGame} />
+      <Won
+        won={hasWon}
+        showWonModal={showWonModal}
+        startGame={startGame}
+        hideModal={() => setShowWonModal(false)}
+      />
+      <NewGame
+        startGame={startGame}
+        hideModal={() => setShowNewGameModal(false)}
+        showNewGameModal={showNewGameModal}
+      />
     </>
   );
 };
