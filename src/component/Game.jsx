@@ -1,7 +1,7 @@
 import React from "react";
 import Block from "./Block";
 
-const Game = ({ grid, originalGrid, userInput, isPlaying, focus, handleFocus, noteModeOn, noteArr }) => {
+const Game = ({ grid, originalGrid, userInput, isPlaying, focus, handleFocus, noteModeOn, noteArr, highlightNum }) => {
   return (
     <div className="grid">
       {grid.map((num, i) => (
@@ -16,10 +16,11 @@ const Game = ({ grid, originalGrid, userInput, isPlaying, focus, handleFocus, no
           handleFocus={handleFocus}
           noteModeOn={noteModeOn}
           noteArr={noteArr[i]}
+          highlightNum={highlightNum}
         />
       ))}
     </div>
   );
 };
 
-export default Game;
+export default React.memo(Game);

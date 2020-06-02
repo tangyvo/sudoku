@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import Game from "./component/Game";
 import Menu from "./component/Menu";
 import Won from "./component/Won";
-import { Winners } from "./component/WinningCombination";
+import { Winners } from "./component/Combinations";
 import NewGame from "./component/NewGame";
 
 const App = () => {
@@ -16,9 +16,11 @@ const App = () => {
   const [error, setError] = useState(false);
   const [focus, setFocus] = useState(null);
   const [hasWon, setHasWon] = useState(false);
+  // const [enteredNum, setEnteredNum] = useState();
   const [noteModeOn, setNoteModeOn] = useState(false);
   const [showWonModal, setShowWonModal] = useState(false);
   const [showNewGameModal, setShowNewGameModal] = useState(false);
+  const [highlightNum, setHighlightNum] = useState([]);
   const [noteArr, setNoteArr] = useState(
     Array(81)
       .fill([])
@@ -80,7 +82,6 @@ const App = () => {
       if (combination !== "123456789") {
         noMatch = true;
         setError(true);
-        console.log(arr);
       }
     }
 
@@ -143,8 +144,34 @@ const App = () => {
       gridHistoryCopy.push(gridCopy);
       setGridHistory(gridHistoryCopy);
     }
+    verifyNum(e.target.value);
     return e.target.value;
   };
+
+  // CHECK IF NUMBER IS ALREADY IN ROW, COL & LOCAL BLOCK
+  const verifyNum = (enteredNum) => {
+    let combinations = [];
+    for (let arr of Winners) {
+      if (arr.includes(focus)) {
+        combinations.push(arr);
+      }
+    }
+
+    const duplicates = [];
+
+    for (let arr of combinations) {
+      for (let i = 0; i < 9; i++) {
+        if (
+          (grid[arr[i]] === enteredNum) &&
+          !duplicates.includes(arr[i])
+        ) {
+          duplicates.push(arr[i]);
+        }
+      }
+    }
+    setHighlightNum(duplicates);
+    console.log(duplicates);
+  }
 
   // STORE PREV FOCUS INDEX AS REF SO FOCUS CAN BE REMOVED LATER
   const prevFocusRef = useRef();
@@ -181,7 +208,6 @@ const App = () => {
 
   // ADDS AND REMOVE NUMBER FROM NOTES ARRAY FOR THE FOCUSED BLOCK
   const handleNote = (key) => {
-    console.log('focus', focus, key)
     let input = (key - 48).toString();
     let noteArrayCopy = noteArr;
 
@@ -260,6 +286,7 @@ const App = () => {
           isPlaying={isPlaying}
           noteModeOn={noteModeOn}
           noteArr={noteArr}
+          highlightNum={highlightNum}
         />
         <Menu
           showModal={() => setShowNewGameModal(true)}
@@ -290,4 +317,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default React.memo(App);
