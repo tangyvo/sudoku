@@ -5,13 +5,13 @@ const Block = ({
   num,
   original,
   index,
-  isPlaying,
   focus,
   handleFocus,
   noteModeOn,
   noteArr,
   highlightNum,
-  helpMode
+  helpMode,
+  grid
 }) => {
   return (
     <>
@@ -47,7 +47,7 @@ const Block = ({
             </div>
           ))}
         </div>
-      ) : !isPlaying ? (
+          ) : (grid.filter(block => block === '0' || block === '').length === 81) ? (
         <div className="block" id={index}></div>
       ) : (
         <input

@@ -15,7 +15,6 @@ const App = () => {
   const [isFullGrid, setIsFullGrid] = useState(false);
   const [error, setError] = useState(false);
   const [focus, setFocus] = useState(null);
-  const [hasWon, setHasWon] = useState(false);
   const [noteModeOn, setNoteModeOn] = useState(false);
   const [showWonModal, setShowWonModal] = useState(false);
   const [showNewGameModal, setShowNewGameModal] = useState(false);
@@ -27,13 +26,19 @@ const App = () => {
       .map((arr, i) => [i, []])
   );
 
+  const prevFocusRef = useRef();
+  const timerRef = useRef();
+
+  useEffect(() => {
+    prevFocusRef.current = focus;
+  });
+
   // RESET GRID & STARTING STATES
   const startGame = () => {
     setShowNewGameModal(false);
     setShowWonModal(false);
     document.querySelector(".btn-start").blur();
     setIsPlaying(false);
-    setHasWon(false);
     setNoteModeOn(false);
     setFocus(null);
     setNoteArr(
@@ -85,36 +90,30 @@ const App = () => {
       }
     }
 
-    // IF WON - FREEZE TIMER AND SET WIN STATE
+    // IF WON - FREEZE TIMER AND SHOW WON MODAL
     if (!noMatch) {
       setError(false);
-      setHasWon(true);
       setShowWonModal(true);
-      let endTime = timer;
-      setTimer(endTime);
+      setIsPlaying(false);
     }
   };
 
   // START TIMER WHEN GAME STARTS AND RESET WHEN PLAYER HAS WON
   useEffect(() => {
-    if (!isPlaying) return;
-
-    if (hasWon) {
-      let endTime = timer;
-      setTimer(endTime);
-      return;
+    if (showWonModal) {
+      clearInterval(timerRef.current);
+    } else if (isPlaying) {
+      let seconds = 0;
+      timerRef.current = setInterval(() => {
+        seconds += 1;
+        formatTime(seconds);
+      }, 1000);
     }
 
-    let seconds = 0;
-    const timeRef = setInterval(() => {
-      seconds += 1;
-      formatTime(seconds);
-    }, 1000);
-
     return () => {
-      clearInterval(timeRef);
+      clearInterval(timerRef.current);
     };
-  }, [isPlaying, hasWon]);
+  }, [isPlaying, showWonModal]);
 
   // FORMAT TIME TO 00:00
   const formatTime = (seconds) => {
@@ -168,21 +167,12 @@ const App = () => {
     setHighlightNum(duplicates);
   };
 
-  // RE-CHECK VERIFYNUM FUNC WHEN TURNING ON HELP MODE
+  // RE-CHECK VERIFYNUM FUNC WHEN HELP MODE IS TURNED ON
   useEffect(() => {
-    if (helpMode) (
-      verifyNum(grid[focus])
-    )
+    if (helpMode) verifyNum(grid[focus]);
   }, [helpMode, grid]);
 
-  // STORE PREV FOCUS INDEX AS REF SO FOCUS CAN BE REMOVED LATER
-  const prevFocusRef = useRef();
-
-  useEffect(() => {
-    prevFocusRef.current = focus;
-  });
-
-  // EVENT LISTENER FOR KEY PRESS
+  // EVENT LISTENERS FOR KEY PRESS
   useEffect(() => {
     window.addEventListener("keydown", handleKeypress);
     return () => {
@@ -270,11 +260,19 @@ const App = () => {
   // UNDO - REVERT GRID TO LAST STATE
   const handleUndo = () => {
     let lastStep = gridHistory.length - 2;
-    if (lastStep < 0) return;
-    setGrid(gridHistory[lastStep]);
-    let updateGridHistory = gridHistory.splice(0, gridHistory.length - 1);
-    setGridHistory(updateGridHistory);
+    if (isPlaying && lastStep >= 0) {
+      setGrid(gridHistory[lastStep]);
+      let updateGridHistory = gridHistory.splice(0, gridHistory.length - 1);
+      setGridHistory(updateGridHistory);
+    }
   };
+
+  // TOGGLE NOTE MODE ON AND OFF
+const handleNoteMode = () => {
+  if (isPlaying) {
+    setNoteModeOn(!noteModeOn)
+  }
+}
 
   return (
     <>
@@ -285,7 +283,6 @@ const App = () => {
           userInput={userInput}
           focus={focus}
           handleFocus={(index) => setFocus(index)}
-          isPlaying={isPlaying}
           noteModeOn={noteModeOn}
           noteArr={noteArr}
           highlightNum={highlightNum}
@@ -300,16 +297,16 @@ const App = () => {
           error={error}
           undo={handleUndo}
           isPlaying={isPlaying}
-          handleNoteMode={() => setNoteModeOn(!noteModeOn)}
+          handleNoteMode={handleNoteMode}
           noteModeOn={noteModeOn}
           gridHistory={gridHistory}
           toggleHelpMode={() => setHelpMode(!helpMode)}
         />
       </div>
       <Won
-        won={hasWon}
         showWonModal={showWonModal}
         startGame={startGame}
+        timer={timer}
         hideModal={() => setShowWonModal(false)}
       />
       <NewGame

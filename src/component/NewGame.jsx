@@ -1,6 +1,6 @@
 import React from "react";
 
-const NewGame = ({ startGame, showNewGameModal, hideModal}) => {
+const NewGame = ({ startGame, showNewGameModal, hideModal }) => {
   return (
     <div className={showNewGameModal ? "modal show" : "modal"}>
       <div className="modal-content">
@@ -12,8 +12,15 @@ const NewGame = ({ startGame, showNewGameModal, hideModal}) => {
           </li>
           <br />
           <h3 className="modal-title">Keyboard Controls:</h3>
-          <li>Press the <strong>spacebar</strong> key to toggle note mode on and off.</li>
-          <li>Use <strong>up</strong>, <strong>down</strong>, <strong>left</strong> & <strong>right</strong> arrow keys to navigate to another cell.</li>
+          <li>
+            Press the <strong>spacebar</strong> key to toggle note mode on and
+            off.
+          </li>
+          <li>
+            Use <strong>up</strong>, <strong>down</strong>,{" "}
+            <strong>left</strong> & <strong>right</strong> arrow keys to
+            move between cell.
+          </li>
         </ul>
         <button className="btn btn-newgame" onClick={startGame}>
           Start
