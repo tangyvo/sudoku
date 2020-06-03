@@ -1,5 +1,6 @@
 import React from "react";
-import { BrowserView, MobileView } from "react-device-detect";
+import { isBrowser } from "react-device-detect";
+import Timer from './Timer';
 
 const Menu = ({
   showModal,
@@ -13,12 +14,13 @@ const Menu = ({
   gridHistory,
   noteModeOn,
   handleNoteMode,
+  toggleHelpMode
 }) => {
   return (
     <nav className="menu">
       <h1 className="title">Sudoku</h1>
       <p className="subtitle">Timer:</p>
-      <div className="timer">{timer}</div>
+      <Timer timer={timer} />
       <p className="subtitle">Difficulty:</p>
       <select className="diffculty" onChange={handleDifficulty}>
         <option value="easy">Easy</option>
@@ -28,6 +30,10 @@ const Menu = ({
       <button className="btn btn-start active" onClick={showModal}>
         New Game
       </button>
+      <label className="help-label"> Help Mode:
+      <input type="checkbox" className='help-checkbox' onChange={toggleHelpMode}/>
+      </label>
+
       <div className="btn-small">
         <button
           className={
@@ -54,15 +60,10 @@ const Menu = ({
         </button>
       </div>
 
-      <BrowserView>
         <p className="note-message">
-          <strong>IN NOTE MODE:</strong> type numbers 1-9 to add and remove from cell.
+        <strong>IN NOTE MODE:</strong> {isBrowser ? 'type numbers 1-9 to add and remove from cell.' : 'Note mode is not available on mobile.'}
         </p>
-      </BrowserView>
 
-      <MobileView>
-        <p className="note-message">Note mode is not available on mobile.</p>
-      </MobileView>
       <button
         className={isFullGrid ? "btn btn-submit active" : "btn btn-submit"}
         disabled={isFullGrid ? false : true}
@@ -75,4 +76,4 @@ const Menu = ({
   );
 };
 
-export default Menu;
+export default React.memo(Menu);

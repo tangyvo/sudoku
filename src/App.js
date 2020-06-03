@@ -16,11 +16,11 @@ const App = () => {
   const [error, setError] = useState(false);
   const [focus, setFocus] = useState(null);
   const [hasWon, setHasWon] = useState(false);
-  // const [enteredNum, setEnteredNum] = useState();
   const [noteModeOn, setNoteModeOn] = useState(false);
   const [showWonModal, setShowWonModal] = useState(false);
   const [showNewGameModal, setShowNewGameModal] = useState(false);
   const [highlightNum, setHighlightNum] = useState([]);
+  const [helpMode, setHelpMode] = useState(false);
   const [noteArr, setNoteArr] = useState(
     Array(81)
       .fill([])
@@ -144,7 +144,9 @@ const App = () => {
       gridHistoryCopy.push(gridCopy);
       setGridHistory(gridHistoryCopy);
     }
-    verifyNum(e.target.value);
+    if (helpMode) {
+      verifyNum(e.target.value);
+    }
     return e.target.value;
   };
 
@@ -154,11 +156,10 @@ const App = () => {
     for (let arr of Winners) {
       if (arr.includes(focus)) {
         combinations.push(arr);
-      }
+      } 
     }
 
     const duplicates = [];
-
     for (let arr of combinations) {
       for (let i = 0; i < 9; i++) {
         if (
@@ -170,8 +171,12 @@ const App = () => {
       }
     }
     setHighlightNum(duplicates);
-    console.log(duplicates);
   }
+
+  // RE-CHECK VERIFYNUM FUNC WHEN TURNING ON HELP MODE
+  useEffect(() => {
+    verifyNum(grid[focus]);
+  }, [helpMode]);
 
   // STORE PREV FOCUS INDEX AS REF SO FOCUS CAN BE REMOVED LATER
   const prevFocusRef = useRef();
@@ -287,6 +292,7 @@ const App = () => {
           noteModeOn={noteModeOn}
           noteArr={noteArr}
           highlightNum={highlightNum}
+          helpMode={helpMode}
         />
         <Menu
           showModal={() => setShowNewGameModal(true)}
@@ -300,6 +306,7 @@ const App = () => {
           handleNoteMode={() => setNoteModeOn(!noteModeOn)}
           noteModeOn={noteModeOn}
           gridHistory={gridHistory}
+          toggleHelpMode={() => setHelpMode(!helpMode)}
         />
       </div>
       <Won

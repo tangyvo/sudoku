@@ -2,7 +2,6 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  // border: 1px solid red
 }
 
 body {
@@ -25,6 +24,7 @@ $white: rgb(250, 251, 255);
 $lighter-gray: rgb(223, 229, 250);
 $accent: rgb(255, 255, 112);
 $secondary: rgb(130, 130, 245);
+$warning: rgb(206, 17, 17);
 
 /* -------------------
 TYPOGRAPHY
@@ -286,6 +286,16 @@ OTHER MENU COMPONENTS
   margin-bottom: 1em;
 }
 
+.help-checkbox {
+  height: 20px;
+  width: 20px;
+  background-color: $accent;
+}
+
+.help-label {
+  margin: 0.5em 0;
+}
+
 /* -------------------
 MODALS
 ------------------- */
@@ -360,6 +370,10 @@ OTHER
   display: block;
 }
 
+.highlight {
+  color: $warning;
+}
+
 /* -------------------
 MOBILE MEDIA QUERIES
 ------------------- */
@@ -383,8 +397,4 @@ MOBILE MEDIA QUERIES
     font-size: 1.2rem;
     font-weight: 500;
   }
-}
-
-.highlight {
-  color: red;
 }

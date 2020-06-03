@@ -11,16 +11,15 @@ const Block = ({
   noteModeOn,
   noteArr,
   highlightNum,
+  helpMode
 }) => {
   return (
     <>
-      {/* <div className="block">{index}</div> */}
-      {console.log(highlightNum.includes(index))}
       {original !== "0" ? (
         <div
           id={index}
           className={
-            highlightNum.includes(index)
+            highlightNum.includes(index) && helpMode
               ? "original highlight"
               : index === focus
               ? "na-focus original"
@@ -56,7 +55,7 @@ const Block = ({
           maxLength="1"
           type="textbox"
           className={
-            highlightNum.includes(index)
+            highlightNum.includes(index) && helpMode
               ? "block highlight"
               : index === focus
               ? "block focus"
