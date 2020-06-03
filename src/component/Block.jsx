@@ -55,7 +55,7 @@ const Block = ({
           maxLength="1"
           type="textbox"
           className={
-            highlightNum.includes(index) && helpMode
+            highlightNum.includes(index) && helpMode && index !== focus
               ? "block highlight"
               : index === focus
               ? "block focus"

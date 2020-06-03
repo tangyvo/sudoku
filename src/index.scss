@@ -57,7 +57,7 @@ TYPOGRAPHY
 }
 
 h3 {
-  font-size: 1rem;
+  font-size: 1.4rem;
   text-decoration: underline;
   margin: 0.5em 0;
 }
@@ -359,6 +359,10 @@ li {
   padding: 0.5em 0;
   font-size: 1em;
   list-style: none;
+
+  strong {
+    color: $secondary;
+  }
 }
 
 /* -------------------

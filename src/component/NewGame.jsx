@@ -8,12 +8,12 @@ const NewGame = ({ startGame, showNewGameModal, hideModal}) => {
         <ul>
           <li>
             Fill in the numbers 1-9 exactly once in every row, column and 3x3
-            block
+            block area.
           </li>
           <br />
           <h3 className="modal-title">Keyboard Controls:</h3>
-          <li>Press the spacebar key to toggle note mode on and off</li>
-          <li>Use up, down, left & right arrow keys to navigate to a block</li>
+          <li>Press the <strong>spacebar</strong> key to toggle note mode on and off.</li>
+          <li>Use <strong>up</strong>, <strong>down</strong>, <strong>left</strong> & <strong>right</strong> arrow keys to navigate to another cell.</li>
         </ul>
         <button className="btn btn-newgame" onClick={startGame}>
           Start

@@ -144,9 +144,7 @@ const App = () => {
       gridHistoryCopy.push(gridCopy);
       setGridHistory(gridHistoryCopy);
     }
-    if (helpMode) {
-      verifyNum(e.target.value);
-    }
+    verifyNum(e.target.value);
     return e.target.value;
   };
 
@@ -156,27 +154,26 @@ const App = () => {
     for (let arr of Winners) {
       if (arr.includes(focus)) {
         combinations.push(arr);
-      } 
+      }
     }
 
     const duplicates = [];
     for (let arr of combinations) {
       for (let i = 0; i < 9; i++) {
-        if (
-          (grid[arr[i]] === enteredNum) &&
-          !duplicates.includes(arr[i])
-        ) {
+        if (grid[arr[i]] === enteredNum && !duplicates.includes(arr[i])) {
           duplicates.push(arr[i]);
         }
       }
     }
     setHighlightNum(duplicates);
-  }
+  };
 
   // RE-CHECK VERIFYNUM FUNC WHEN TURNING ON HELP MODE
   useEffect(() => {
-    verifyNum(grid[focus]);
-  }, [helpMode]);
+    if (helpMode) (
+      verifyNum(grid[focus])
+    )
+  }, [helpMode, grid]);
 
   // STORE PREV FOCUS INDEX AS REF SO FOCUS CAN BE REMOVED LATER
   const prevFocusRef = useRef();
