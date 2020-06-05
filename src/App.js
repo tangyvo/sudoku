@@ -193,9 +193,20 @@ const App = () => {
     // 1-9 NUBMER KEYS
     else if (e.keyCode >= 49 && e.keyCode <= 57 && focus >= 0 && noteModeOn) {
       handleNote(e.keyCode);
+    }
+    // R KEY
+    else if (e.keyCode === 82) {
+      clearNotes();
     } else {
       return;
     }
+  };
+
+  // CLEAR ALL NOTES FROM ACTIVE CELL
+  const clearNotes = () => {
+    let noteArrayCopy = noteArr;
+    noteArrayCopy[focus][1] = [];
+    setNoteArr(noteArrayCopy);
   };
 
   // ADDS AND REMOVE NUMBER FROM NOTES ARRAY FOR THE FOCUSED BLOCK
@@ -211,7 +222,6 @@ const App = () => {
     } else {
       noteArrayCopy[focus][1].push(input);
     }
-
     setNoteArr(noteArrayCopy);
   };
 
@@ -268,11 +278,11 @@ const App = () => {
   };
 
   // TOGGLE NOTE MODE ON AND OFF
-const handleNoteMode = () => {
-  if (isPlaying) {
-    setNoteModeOn(!noteModeOn)
-  }
-}
+  const handleNoteMode = () => {
+    if (isPlaying) {
+      setNoteModeOn(!noteModeOn);
+    }
+  };
 
   return (
     <>

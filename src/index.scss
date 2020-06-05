@@ -2,6 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  // border: 1px solid red;
 }
 
 body {
@@ -56,8 +57,8 @@ TYPOGRAPHY
   text-align: center;
 }
 
-h3 {
-  font-size: 1.4rem;
+.modal-title {
+  font-size: 1rem;
   text-decoration: underline;
   margin: 0.5em 0;
 }
@@ -65,6 +66,10 @@ h3 {
 h4 {
   margin: 1em 0;
   color: $secondary;
+}
+
+p {
+  text-align: center;
 }
 
 /* -------------------
@@ -119,7 +124,7 @@ LAYOUT
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  width: 250px;
+  min-width: 250px;
   min-height: calc(50px * 9);
 }
 
@@ -316,9 +321,10 @@ MODALS
   color: $white;
   border-radius: 10px;
   text-align: center;
-  height: 380px;
+  height: 400px;
   width: 450px;
   max-width: 90vw;
+  color: $white;
 
   p {
     font-size: 3rem;
@@ -333,7 +339,7 @@ MODALS
   align-items: center;
   justify-content: center;
   height: 100%;
-  padding: 0 10px;
+  padding: 20px;
 }
 
 .modal-close {
@@ -393,6 +399,10 @@ MOBILE MEDIA QUERIES
     padding: 20px 0;
   }
 
+  .modal {
+    height: 350px;
+  }
+
   .grid {
     margin: 10px 0;
     border: 3px solid $dark-primary;
@@ -401,9 +411,63 @@ MOBILE MEDIA QUERIES
   .block,
   .original,
   .notes {
-    height: 40px;
-    width: 40px;
+    height: 35px;
+    width: 35px;
     font-size: 1.2rem;
     font-weight: 500;
+  }
+
+  .menu {
+    display: grid;
+    width: 350px;
+    grid-template-columns: repeat(2, 1fr);
+    min-height: 320px;
+
+    div {
+      width: 150px;
+      justify-self: center;
+      align-self: center;
+    }
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+
+  .timer {
+    margin-bottom: 0;
+  }
+
+  .btn,
+  .btn-small {
+    width: 150px;
+    height: 45px;
+    margin: 0.5em 0;
+    justify-self: center;
+    align-self: center;
+  }
+
+  .btn-small {
+    margin-right: 0.5em;
+    padding: 0.2em;
+
+    .btn {
+      max-width: 75px;
+    }
+  }
+
+  .btn-newgame {
+    grid-row: 1;
+    grid-column: 2;
+  }
+
+  .diffculty {
+    width: 150px;
+  }
+
+  .error {
+    grid-column: 1 / 3;
+    text-align: center;
+    width: 100%;
   }
 }
