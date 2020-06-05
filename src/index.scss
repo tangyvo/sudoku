@@ -2,7 +2,6 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  // border: 1px solid red;
 }
 
 body {
@@ -49,6 +48,7 @@ TYPOGRAPHY
   width: 180px;
   text-align: center;
   font-style: italic;
+  font-weight: 600;
 }
 
 .note-message {
@@ -80,7 +80,7 @@ LAYOUT
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  height: 100vh;
   background-color: $white;
   position: relative;
 }
@@ -125,7 +125,6 @@ LAYOUT
   justify-content: flex-start;
   align-items: center;
   min-width: 250px;
-  min-height: calc(50px * 9);
 }
 
 /* -------------------
@@ -404,7 +403,7 @@ MOBILE MEDIA QUERIES
   }
 
   .grid {
-    margin: 10px 0;
+    margin-bottom: 10px;
     border: 3px solid $dark-primary;
   }
 
@@ -421,7 +420,6 @@ MOBILE MEDIA QUERIES
     display: grid;
     width: 350px;
     grid-template-columns: repeat(2, 1fr);
-    min-height: 320px;
 
     div {
       width: 150px;
