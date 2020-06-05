@@ -34,16 +34,13 @@ const Menu = ({
       <button className="btn btn-start active" onClick={showModal}>
         New Game
       </button>
-      <div>
-        <label className="help-label">
-          {" "}
-          Help Mode:
-          <input
-            type="checkbox"
-            className="help-checkbox"
-            onChange={toggleHelpMode}
-          />
-        </label>
+      <div className="help-label">
+        <label> Help Mode:</label>
+        <input
+          type="checkbox"
+          className="help-checkbox"
+          onChange={toggleHelpMode}
+        />
       </div>
 
       <div className="btn-small">

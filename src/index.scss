@@ -2,6 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  // border: 1px solid red;
 }
 
 body {
@@ -283,9 +284,6 @@ OTHER MENU COMPONENTS
   font-size: 1rem;
   width: 180px;
   text-align: center;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
   padding: 0.5em;
 }
 
@@ -302,7 +300,12 @@ OTHER MENU COMPONENTS
 }
 
 .help-label {
-  margin: 0.5em 0;
+  display: flex;
+  margin: 0.75em 0;
+
+  label {
+    padding-right: 0.5em;
+  }
 }
 
 /* -------------------
@@ -369,7 +372,6 @@ li {
   padding: 0.5em 0;
   font-size: 1em;
   list-style: none;
-
   strong {
     color: $secondary;
   }
@@ -409,15 +411,15 @@ MOBILE MEDIA QUERIES
   .block,
   .original,
   .notes {
-    height: 40px;
-    width: 40px;
+    height: 45px;
+    width: 45px;
     font-size: 1.2rem;
     font-weight: 500;
   }
 
   .menu {
     display: grid;
-    width: 350px;
+    width: 320px;
     grid-template-columns: repeat(2, 1fr);
 
     div {
@@ -435,18 +437,15 @@ MOBILE MEDIA QUERIES
     margin-bottom: 0;
   }
 
-  .btn,
-  .btn-small {
-    width: 150px;
+  .btn {
+    width: 160px;
     height: 45px;
     margin: 0.5em 0;
     justify-self: center;
-    align-self: center;
   }
 
   .btn-small {
-    margin-right: 0.5em;
-    padding: 0.2em;
+    min-width: 160px;
 
     .btn {
       max-width: 75px;
@@ -459,12 +458,23 @@ MOBILE MEDIA QUERIES
   }
 
   .diffculty {
-    width: 150px;
+    width: 140px;
   }
 
   .error {
     grid-column: 1 / 3;
     text-align: center;
     width: 100%;
+  }
+}
+
+@media (max-width: 500px) {
+  .block,
+  .original,
+  .notes {
+    height: 35px;
+    width: 35px;
+    font-size: 1rem;
+    font-weight: 500;
   }
 }

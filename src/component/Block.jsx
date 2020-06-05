@@ -51,11 +51,13 @@ const Block = ({
       ) : grid.filter((block) => block === "0" || block === "").length ===
         81 ? (
         <div className="block" id={index}></div>
-      ) : isBrowser ? (
+      ) : (
         <input
           id={index}
           maxLength="1"
-          type="textbox"
+          type={isBrowser ? 'textBox' : 'number'}
+          inputMode={isBrowser ? null : 'numeric'}
+          patttern={isBrowser ? null : '[0-9]*'}
           className={
             highlightNum.includes(index) && helpMode && index !== focus
               ? "block highlight"
@@ -66,25 +68,7 @@ const Block = ({
           value={num === "0" ? "" : num}
           onChange={(e) => userInput(e, index)}
           onClick={() => handleFocus(index)}
-        />) :
-      (<input
-        id={index}
-        maxLength="1"
-        type="number"
-        inputMode="numeric"
-        pattern="[0-9]*"
-        className={
-          highlightNum.includes(index) && helpMode && index !== focus
-            ? "block highlight"
-            : index === focus
-              ? "block focus"
-              : "block"
-        }
-        value={num === "0" ? "" : num}
-        onChange={(e) => userInput(e, index)}
-        onClick={() => handleFocus(index)}
-      />
-      )}
+        />)}
     </>
   );
 };

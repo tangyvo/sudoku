@@ -35,6 +35,7 @@ const App = () => {
 
   // RESET GRID & STARTING STATES
   const startGame = () => {
+    setHighlightNum([]);
     setShowNewGameModal(false);
     setShowWonModal(false);
     document.querySelector(".btn-start").blur();
@@ -169,7 +170,7 @@ const App = () => {
 
   // RE-CHECK VERIFYNUM FUNC WHEN HELP MODE IS TURNED ON
   useEffect(() => {
-    if (helpMode) verifyNum(grid[focus]);
+    if (helpMode) {verifyNum(grid[focus])};
   }, [helpMode]);
 
   // EVENT LISTENERS FOR KEY PRESS
@@ -269,6 +270,7 @@ const App = () => {
 
   // UNDO - REVERT GRID TO LAST STATE
   const handleUndo = () => {
+    verifyNum(grid[focus]);
     let lastStep = gridHistory.length - 2;
     if (isPlaying && lastStep >= 0) {
       setGrid(gridHistory[lastStep]);
