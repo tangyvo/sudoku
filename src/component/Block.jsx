@@ -11,7 +11,7 @@ const Block = ({
   noteArr,
   highlightNum,
   helpMode,
-  grid
+  grid,
 }) => {
   return (
     <>
@@ -47,14 +47,16 @@ const Block = ({
             </div>
           ))}
         </div>
-          ) : (grid.filter(block => block === '0' || block === '').length === 81) ? (
+      ) : grid.filter((block) => block === "0" || block === "").length ===
+        81 ? (
         <div className="block" id={index}></div>
       ) : (
         <input
           id={index}
           maxLength="1"
           type="number"
-          inputMode='numeric'
+          inputMode="numeric"
+          pattern="[0-9]*"
           className={
             highlightNum.includes(index) && helpMode && index !== focus
               ? "block highlight"
