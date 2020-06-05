@@ -80,7 +80,7 @@ LAYOUT
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
   background-color: $white;
   position: relative;
 }
@@ -392,10 +392,9 @@ OTHER
 MOBILE MEDIA QUERIES
 ------------------- */
 
-@media (max-width: 700px) {
+@media (max-width: 750px) {
   .app {
     flex-direction: column;
-    max-height: 100vh;
   }
 
   .modal {
@@ -410,8 +409,8 @@ MOBILE MEDIA QUERIES
   .block,
   .original,
   .notes {
-    height: 35px;
-    width: 35px;
+    height: 40px;
+    width: 40px;
     font-size: 1.2rem;
     font-weight: 500;
   }
