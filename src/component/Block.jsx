@@ -53,7 +53,8 @@ const Block = ({
         <input
           id={index}
           maxLength="1"
-          type="textbox"
+          type="number"
+          inputMode='numeric'
           className={
             highlightNum.includes(index) && helpMode && index !== focus
               ? "block highlight"
