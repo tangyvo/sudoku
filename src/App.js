@@ -170,7 +170,7 @@ const App = () => {
   // RE-CHECK VERIFYNUM FUNC WHEN HELP MODE IS TURNED ON
   useEffect(() => {
     if (helpMode) verifyNum(grid[focus]);
-  }, [helpMode, grid]);
+  }, [helpMode, grid, focus]);
 
   // EVENT LISTENERS FOR KEY PRESS
   useEffect(() => {
